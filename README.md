@@ -34,6 +34,6 @@ https://github.com/kyorohiro/umiuni2d_netbox
 
 ## VERSION
 ### 0.0.1
-* branch is "version_0_0_1" https://github.com/kyorohiro/umiuni2d/tree/version_0_0_1
-* example branch is "version_0_0_1" too.
-https://github.com/kyorohiro/umiuni2d_example/tree/version_0_0_1
+* tag is "v0.0.1" https://github.com/kyorohiro/umiuni2d/tree/v0.0.1
+* example branch is "v0.0.1" too.
+https://github.com/kyorohiro/umiuni2d_example/tree/v0.0.1
