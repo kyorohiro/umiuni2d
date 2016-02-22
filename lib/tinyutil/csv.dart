@@ -1,24 +1,58 @@
 library tinyutil.csv;
 
 class TinyCsv {
-  int _col = 0;
-  int _row = 0;
-  int get col => _col;
-  int get row => _row;
+  int get col {
+    int ret = 1;
+    for(List a in _value) {
+      if(ret < a.length) {
+        ret = a.length;
+      }
+    }
+    return ret;
+  }
+  int get row => _value.length;
 
-  List<List<String>> value;
+  List<List<String>> get value => _value;
+  List<List<String>>  _value = [];
+
+  TinyCsv({List<List<String>> value:null}) {
+    if(value != null) {
+      _value = value;
+    }
+  }
 
   static TinyCsvDecoder _decoder = new TinyCsvDecoder("");
-
   static TinyCsv decode(String source) {
     _decoder.source = source;
     _decoder.index = 0;
     List value = _decoder.parse();
     TinyCsv csv = new TinyCsv();
-    csv.value = value;
-    csv._col = _decoder.col;
-    csv._row = _decoder.row;
+    csv._value = value;
+    //csv._col = _decoder.col;
+    //csv._row = _decoder.row;
     return csv;
+  }
+
+  static String encode(TinyCsv csv) {
+    StringBuffer buffer = new StringBuffer();
+    //
+    for(List<String> r in csv.value) {
+      bool first = true;
+      for(String v in r) {
+        if(first==true) {
+          first=false;
+        } else {
+          buffer.write(',');
+        }
+        if(v.contains('"')) {
+          buffer.write('"'+v.replaceAll('"', '""')+'"');
+        } else {
+          buffer.write(v);
+        }
+      }
+      buffer.write("\r\n");
+    }
+    return buffer.toString();
   }
 }
 

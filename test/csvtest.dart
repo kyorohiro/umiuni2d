@@ -65,4 +65,19 @@ void main() {
       expect(4, csv.col);
     });
   });
+
+  ///
+  ///
+  ///
+  group('#(3)# [TinyCsv.encode]', () {
+    //
+    test("xxx,yyy,zzz", () {
+      TinyCsv csv =  new TinyCsv(value:[["xxx", "yyy", "zzz"]]);
+      expect("xxx,yyy,zzz\r\n", TinyCsv.encode(csv));
+    });
+    test('"x""xx","yyy","zzz",\n"aaa","bbb","ccc"\n', () {
+      TinyCsv csv =  new TinyCsv(value:[["x\"xx", "yyy", "zzz", ""],["aaa", "bbb", "ccc"]]);
+      expect('"x""xx",yyy,zzz,\r\naaa,bbb,ccc\r\n', TinyCsv.encode(csv));
+    });
+  });
 }
