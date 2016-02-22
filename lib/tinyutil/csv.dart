@@ -1,9 +1,22 @@
 library tinyutil.csv;
 
+
 class TinyCsv {
+  int _col = 0;
+  int _row = 0;
+  int get col => _col;
+  int get row => _row;
+  List<List<String>> value;
+
+  static TinyCsv decode(String source) {
+    return null;
+  }  
+}
+
+class TinyCsvDecoder {
   int index = 0;
   String source;
-  TinyCsv(this.source) {}
+  TinyCsvDecoder(this.source) {}
 
   List<List<String>> parse() {
     List ret = [];
