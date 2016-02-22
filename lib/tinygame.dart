@@ -9,11 +9,18 @@ import 'dart:typed_data';
 
 part 'tinygame/displayobject.dart';
 part 'tinygame/displayobjectplus.dart';
-part 'tinygame/env.dart';
+part 'tinygame/image.dart';
 part 'tinygame/util.dart';
 part 'tinygame/gameroot.dart';
-
+part 'tinygame/builder.dart';
+part 'tinygame/file.dart';
+part 'tinygame/rect.dart';
+part 'tinygame/point.dart';
+part 'tinygame/size.dart';
 part 'tinygame/canvas.dart';
+part 'tinygame/paint.dart';
+part 'tinygame/color.dart';
+
 part 'tinygame/stage.dart';
 part 'tinygame/sprite.dart';
 part 'tinygame/exdo.dart';
