@@ -47,5 +47,13 @@ void main() {
       TinyCsv csv = new TinyCsv('"x""xx","yyy","zzz",\n"aaa","bbb","ccc"\n');
       expect([["x\"xx", "yyy", "zzz", ""],["aaa", "bbb", "ccc"]], csv.parse());
     });
+
+    //
+    //
+    //
+    test('"x\\nxx,"yyy","zzz",', () {
+      TinyCsv csv = new TinyCsv('"x\nxx","yyy","zzz",');
+      expect([["x\nxx", "yyy", "zzz", ""]], csv.parse());
+    });
   });
 }
