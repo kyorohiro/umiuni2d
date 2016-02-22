@@ -6,12 +6,12 @@ import 'dart:async';
 //import 'dart:convert' as conv;
 import 'package:vector_math/vector_math_64.dart';
 import 'dart:typed_data';
+import 'tinyutil.dart';
 
 part 'tinygame/displayobject.dart';
 part 'tinygame/displayobject_expansion.dart';
 part 'tinygame/displayobject_expansion_item.dart';
 part 'tinygame/image.dart';
-part 'tinygame/util.dart';
 part 'tinygame/gameroot.dart';
 part 'tinygame/builder.dart';
 part 'tinygame/file.dart';
