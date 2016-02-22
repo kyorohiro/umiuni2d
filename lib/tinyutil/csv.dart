@@ -1,38 +1,59 @@
 library tinyutil.csv;
 
-
 class TinyCsv {
   int _col = 0;
   int _row = 0;
   int get col => _col;
   int get row => _row;
+
   List<List<String>> value;
 
+  static TinyCsvDecoder _decoder = new TinyCsvDecoder("");
+
   static TinyCsv decode(String source) {
-    return null;
-  }  
+    _decoder.source = source;
+    _decoder.index = 0;
+    List value = _decoder.parse();
+    TinyCsv csv = new TinyCsv();
+    csv.value = value;
+    csv._col = _decoder.col;
+    csv._row = _decoder.row;
+    return csv;
+  }
 }
 
 class TinyCsvDecoder {
   int index = 0;
   String source;
+  int col = 0; // |
+  int row = 0; // --
+
   TinyCsvDecoder(this.source) {}
 
   List<List<String>> parse() {
+    index = 0;
+    col = 0; // |
+    row = 0; // --
     List ret = [];
     do {
       ret.add(parseRow());
+      row++;
       parseEND(modIndex: true);
     } while (index < source.length);
     return ret;
   }
 
   List parseRow() {
-    List col = [];
+    List cols = [];
+    int c = 0;
     do {
-      col.add(parseValue());
+      cols.add(parseValue());
+      c++;
     } while (parseConmma(modIndex: true));
-    return col;
+    if (c > col) {
+      col = c;
+    }
+    return cols;
   }
 
   //doubleQuote
