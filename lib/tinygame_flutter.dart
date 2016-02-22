@@ -14,10 +14,10 @@ import 'tinygame.dart';
 import 'package:sky_services/media/media.mojom.dart';
 import 'package:mojo/core.dart';
 
-part 'tinygame/flutter/stage.dart';
-part 'tinygame/flutter/audio.dart';
-part 'tinygame/flutter/file.dart';
-part 'tinygame/flutter/canvas.dart';
-part 'tinygame/flutter/ncanvas.dart';
-part 'tinygame/flutter/game_builder.dart';
-part 'tinygame/flutter/loader.dart';
+part 'tinygame_flutter/stage.dart';
+part 'tinygame_flutter/audio.dart';
+part 'tinygame_flutter/file.dart';
+part 'tinygame_flutter/canvas.dart';
+part 'tinygame_flutter/ncanvas.dart';
+part 'tinygame_flutter/game_builder.dart';
+part 'tinygame_flutter/loader.dart';

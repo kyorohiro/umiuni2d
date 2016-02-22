@@ -9,8 +9,8 @@ import 'dart:typed_data';
 import 'tinygame.dart';
 
 
-part 'tinygame/tool/controller/button.dart';
-part 'tinygame/tool/controller/joystick.dart';
-part 'tinygame/tool/texture_atlas/spritesheet.dart';
-part 'tinygame/tool/texture_atlas/spritesheetinfo.dart';
-part 'tinygame/tool/texture_atlas/bitmapfont.dart';
+part 'tinygame_ex/controller/button.dart';
+part 'tinygame_ex/controller/joystick.dart';
+part 'tinygame_ex/texture_atlas/spritesheet.dart';
+part 'tinygame_ex/texture_atlas/spritesheetinfo.dart';
+part 'tinygame_ex/texture_atlas/bitmapfont.dart';
