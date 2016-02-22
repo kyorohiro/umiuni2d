@@ -85,7 +85,7 @@ class TinySprite extends TinyDisplayObjectEx {
   }
 
   void updateMat() {
-  //if (_update) {
+    if (_update) {
       mat.setIdentity();
       mat.translate(x, y, 0.0);
       mat.scale(scaleX, scaleY, 1.0);
@@ -93,19 +93,20 @@ class TinySprite extends TinyDisplayObjectEx {
       mat.rotateZ(rotation);
       mat.translate(-centerX, -centerY, 0.0);
       _update = false;
-  //  }
+    }
   }
 
   bool checkFocus(double localX, double localY) {
     updateMat();
 //    print("--${localX}:${localY}, ${image.w}:${image.h}a");
-    if(0<localX && localX < image.w) {
-      if(0<localY && localY < image.h) {
+    if (0 < localX && localX < image.w) {
+      if (0 < localY && localY < image.h) {
         return true;
       }
     }
     return false;
   }
+
   void onTick(TinyStage stage, int timeStamp) {
     updateMat();
   }
