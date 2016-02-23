@@ -21,6 +21,15 @@ class TinyCsv {
     }
   }
 
+  factory TinyCsv.fromString(String source) {
+    return TinyCsv.decode(source);
+  }
+
+  @override
+  String toString() {
+    return TinyCsv.encode(this);
+  }
+
   static TinyCsvDecoder _decoder = new TinyCsvDecoder("");
   static TinyCsv decode(String source) {
     _decoder.source = source;
