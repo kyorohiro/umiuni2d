@@ -30,8 +30,9 @@ enum CanvasElementTextAlign {
 }
 
 class CanvasElementText {
-  static html.CanvasRenderingContext2D resetCanvasImage({int fontsize: 25, String fontStyle: "bold", String fontFamily: "Century Gothic", String color: "rgb(2,169,159)", int height: 300, int width: 300, html.CanvasElement canvasElm: null}) {
 
+
+  static html.CanvasRenderingContext2D resetCanvasImage({int fontsize: 25, String fontStyle: "bold", String fontFamily: "Century Gothic", String color: "rgb(2,169,159)", int height: 300, int width: 300, html.CanvasElement canvasElm: null}) {
     html.CanvasRenderingContext2D context = canvasElm.context2D;
     canvasElm.width = width;
     canvasElm.height = height;
@@ -42,12 +43,12 @@ class CanvasElementText {
   }
 
 
-
-  static Future<html.CanvasElement> makeImage(String message,
+  static html.CanvasElement makeImage(String message,
     {String color: "rgb(2,169,159)", num fontsize: 25, String fontStyle: "bold",
      String fontFamily: "Century Gothic",
      int height: 300, int width: 300, html.CanvasElement canvasElm: null,
-     CanvasElementTextAlign align:CanvasElementTextAlign.center_center}) async {
+     CanvasElementTextAlign align:CanvasElementTextAlign.center_center,
+     bool resizeHeight:true}) {
     if (canvasElm == null) {
       canvasElm = new html.CanvasElement();
     }
@@ -56,6 +57,13 @@ class CanvasElementText {
     resetCanvasImage(fontsize: fontsize, fontStyle: fontStyle, fontFamily: fontFamily, color: color, height: height, width: width, canvasElm: canvasElm);
 
     TextLines lines = new TextLines.fromContext2D(context, message, width, fontsize);
+    //
+    if(resizeHeight == true) {
+      if(lines.height > height) {
+        canvasElm.height = (lines.height * 1.0).toInt();
+        resetCanvasImage(fontsize: fontsize, fontStyle: fontStyle, fontFamily: fontFamily, color: color, height: canvasElm.height, width: width, canvasElm: canvasElm);
+      }
+    }
     //
     int beginY = 0;
     int beginX = 0;
@@ -79,6 +87,7 @@ class CanvasElementText {
       context.fillText(t, beginX, beginY + h + fontsize);
       h += lines.fontHeights[i];
     }
+
 
     return canvasElm;
   }
