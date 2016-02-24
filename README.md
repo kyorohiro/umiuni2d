@@ -34,6 +34,15 @@ https://github.com/kyorohiro/umiuni2d_netbox
 
 ## VERSION
 ### 0.0.1
+Trial for making mini games.
+https://play.google.com/store/apps/details?id=info.kyorohiro.umiuni2d.demo.mino
+
 * tag is "v0.0.1" https://github.com/kyorohiro/umiuni2d/tree/v0.0.1
 * example branch is "v0.0.1" too.
 https://github.com/kyorohiro/umiuni2d_example/tree/v0.0.1
+
+
+### 0.0.2 now creating
+* animation plus
+* scroll view plus
+* mod interface
