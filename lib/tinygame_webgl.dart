@@ -12,9 +12,10 @@ import 'dart:convert' as conv;
 
 part 'tinygame_webgl/stage.dart';
 part 'tinygame_webgl/util.dart';
+part 'tinygame_webgl/loader.dart';
 part 'tinygame_webgl/file.dart';
 part 'tinygame_webgl/audio.dart';
 part 'tinygame_webgl/image.dart';
 part 'tinygame_webgl/canvas.dart';
-part 'tinygame_webgl/ncanvas.dart';
+part 'tinygame_webgl/context.dart';
 part 'tinygame_webgl/gamebuilder.dart';

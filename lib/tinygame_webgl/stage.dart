@@ -96,7 +96,7 @@ class TinyWebglStage extends Object with TinyStage {
         if (isPaint && animeIsStart == false || sum_a > paintInterval) {
           new Future(() {
             if(c == null) {
-              c = new TinyWebglCanvasTS(glContext);
+              c = new TinyWebglCanvas(glContext);
             }
             c.clear();
             kickPaint(this, c);

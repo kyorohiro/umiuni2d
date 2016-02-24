@@ -10,6 +10,11 @@ abstract class TinyGameBuilder {
   Future<String> loadStringBase(String path);
   Future<TinyImage> loadImageBase(String path);
   Future<Uint8List> loadBytesBase(String path);
+  Future<TinyFile> loadFile(String name);
+  Future<List<String>> getFiles();
+  Future<String> getLocale();
+  Future<double> getDisplayDensity();
+
   Future<TinyImage> loadImage(String path) async {
     if (cach.containsKey(path)) {
       return cach[path];
@@ -80,8 +85,4 @@ abstract class TinyGameBuilder {
     cachBytes.clear();
   }
 
-  Future<TinyFile> loadFile(String name);
-  Future<List<String>> getFiles();
-  Future<String> getLocale();
-  Future<double> getDisplayDensity();
 }
