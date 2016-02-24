@@ -22,6 +22,13 @@ class ImageElementResizer {
   }
 }
 
+enum CanvasElementTextAlign {
+  left_top,
+  left_center,
+  center_top,
+  center_center,
+}
+
 class CanvasElementText {
   static html.CanvasRenderingContext2D resetCanvasImage({int fontsize: 25, String fontStyle: "bold", String fontFamily: "Century Gothic", String color: "rgb(2,169,159)", int height: 300, int width: 300, html.CanvasElement canvasElm: null}) {
 
@@ -34,69 +41,65 @@ class CanvasElementText {
     return context;
   }
 
-  static Future<html.CanvasElement> makeImage(String message, {String color: "rgb(2,169,159)", int fontsize: 25, String fontStyle: "bold", String fontFamily: "Century Gothic", int height: 300, int width: 300, html.CanvasElement canvasElm: null}) async {
+
+
+  static Future<html.CanvasElement> makeImage(String message,
+    {String color: "rgb(2,169,159)", num fontsize: 25, String fontStyle: "bold",
+     String fontFamily: "Century Gothic",
+     int height: 300, int width: 300, html.CanvasElement canvasElm: null,
+     CanvasElementTextAlign align:CanvasElementTextAlign.center_center}) async {
     if (canvasElm == null) {
       canvasElm = new html.CanvasElement();
     }
+
     html.CanvasRenderingContext2D context =
     resetCanvasImage(fontsize: fontsize, fontStyle: fontStyle, fontFamily: fontFamily, color: color, height: height, width: width, canvasElm: canvasElm);
 
-    num h = 0;
-    num w = 0;
-    List<String> texts = [];
+    TextLines lines = new TextLines.fromContext2D(context, message, width, fontsize);
+    //
+    int beginY = 0;
+    int beginX = 0;
+    if(align == CanvasElementTextAlign.center_center) {
+       beginY = (height - lines.height) ~/ 2;
+       beginX = (width - lines.width) ~/ 2;
+    } else if(align == CanvasElementTextAlign.center_top) {
+       beginY = 0;
+       beginX = (width - lines.width) ~/ 2;
+    } else if(align == CanvasElementTextAlign.left_top) {
+      beginY = 0;
+      beginX = 0;
+    } else {
+      beginY = (height - lines.height) ~/ 2;
+      beginX = 0;
+    }
 
-    for (int i = 0; i < message.length; i++) {
-      html.TextMetrics m = context.measureText(message.substring(0, i));
-      if (m.width > width) {
-        String tmp = message.substring(0, i - 1);
-        message = message.substring(i - 1);
-        m = context.measureText(tmp);
-        i = 0;
-        //context.fillText(tmp, 0, h+ m.actualBoundingBoxAscent);
-        //h += fontsize * 1.25; //
-        h +=m.actualBoundingBoxAscent+m.actualBoundingBoxDescent;
-        if (w < m.width) {
-          w = m.width;
-        }
-        //print("## ${h} ${m.actualBoundingBoxAscent} ${m.actualBoundingBoxDescent} ${message}");
-        texts.add(tmp);
-      }
-      ;
-    }
-    html.TextMetrics m = context.measureText(message);
-    h += (m.actualBoundingBoxAscent+m.actualBoundingBoxDescent)*2.0;
-    if (w < m.width) {
-      w = m.width;
-    }
-    texts.add(message);
-    //
-    //
-    int beginY = (height - h) ~/ 2;
-    int beginX = (width - w) ~/ 2;
-    print("###########${beginX} ${beginY}");
-    h = 0;
-    for (String t in texts) {
-      h += (m.actualBoundingBoxAscent+m.actualBoundingBoxDescent);
-      context.fillText(t, beginX, beginY + h + m.actualBoundingBoxAscent); //m.actualBoundingBoxAscent);
+    int h = 0;
+    for (int i=0;i<lines.texts.length;i++) {
+      String t = lines.texts[i];
+      context.fillText(t, beginX, beginY + h + fontsize);
+      h += lines.fontHeights[i];
     }
 
     return canvasElm;
   }
 }
 
-class ImageUtil {
-  static Future<html.ImageElement> makeImage(String message, {String color: "rgb(2,169,159)", int fontsize: 25, int height: 300, int width: 300}) async {
-    html.CanvasElement canvasElm = new html.CanvasElement();
-    html.CanvasRenderingContext2D context = canvasElm.context2D;
-    canvasElm.width = width;
-    canvasElm.height = height;
-    context.font = "bold ${fontsize}px Century Gothic";
-    context.strokeStyle = "rgb(2,169,159)";
-    context.fillStyle = "${color}";
+class TextMetricsJS {
 
-    num h = 0;
-    num w = 0;
-    List<String> texts = [];
+}
+
+class TextLines {
+  int _width = 0;
+  int _height = 0;
+  int get width => _width;
+  int get height => _height;
+  List<int> size = [];
+  List<num> fontHeights = [];
+  List<String> texts = [];
+
+  TextLines.fromContext2D(html.CanvasRenderingContext2D context, String message, int width, int fontHeight) {
+    _width = 0;
+    _height = 0;
 
     for (int i = 0; i < message.length; i++) {
       html.TextMetrics m = context.measureText(message.substring(0, i));
@@ -105,37 +108,23 @@ class ImageUtil {
         message = message.substring(i - 1);
         m = context.measureText(tmp);
         i = 0;
-        //context.fillText(tmp, 0, h+ m.actualBoundingBoxAscent);
-        h += fontsize * 1.25; //m.actualBoundingBoxAscent+m.actualBoundingBoxDescent;
-        if (w < m.width) {
-          w = m.width;
+        print("##  ${message}");
+        _height += fontHeight*1.2;
+        if (_width < m.width) {
+          _width = m.width;
         }
-        //print("## ${h} ${m.actualBoundingBoxAscent} ${m.actualBoundingBoxDescent} ${message}");
         texts.add(tmp);
+        size.add(m.width);
+        fontHeights.add(fontHeight*1.2);
       }
-      ;
     }
     html.TextMetrics m = context.measureText(message);
-    h += fontsize * 1.25 * 2.0; //(m.actualBoundingBoxAscent+m.actualBoundingBoxDescent)*2.0;
-    if (w < m.width) {
-      w = m.width;
-    }
     texts.add(message);
-    //
-    //
-    int beginY = (height - h) ~/ 2;
-    int beginX = (width - w) ~/ 2;
-    print("###########${beginX} ${beginY}");
-    h = 0;
-    for (String t in texts) {
-      h += fontsize * 1.25; //(m.actualBoundingBoxAscent+m.actualBoundingBoxDescent);
-      context.fillText(t, beginX, beginY + h + fontsize); //m.actualBoundingBoxAscent);
+    size.add(m.width);
+    fontHeights.add(fontHeight*1.2);
+    _height += fontHeight*1.2;
+    if (_width < m.width) {
+      _width = m.width;
     }
-
-    html.ImageElement ret = new html.ImageElement();
-    ret.src = canvasElm.toDataUrl();
-    ret.width = 300;
-    ret.height = 300;
-    return ret;
   }
 }
