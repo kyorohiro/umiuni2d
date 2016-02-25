@@ -117,7 +117,7 @@ class TextLines {
         message = message.substring(i - 1);
         m = context.measureText(tmp);
         i = 0;
-        print("##  ${message}");
+        //print("##  ${message}");
         _height += fontHeight*1.2;
         if (_width < m.width) {
           _width = m.width;

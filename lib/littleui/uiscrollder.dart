@@ -51,7 +51,7 @@ class LittleUIScroller extends LittleUIObject {
   }
 
   void onTick(TinyStage stage, int timeStamp) {
-    print("======================ZZZZ ${y} ${speedY} ${isPush}");
+    //print("======================ZZZZ ${y} ${speedY} ${isPush}");
     if (isPush == false && speedY != 999.0 && (-1.0 > speedY || speedY > 1.0)) {
       if (speedY > 0) {
         speedY *= 0.85;
@@ -80,7 +80,7 @@ class LittleUIScroller extends LittleUIObject {
   }
 
   bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double globalX, double globalY) {
-    print("======================XXXX ${y} ${speedY} ${isPush}");
+  //  print("======================XXXX ${y} ${speedY} ${isPush}");
     switch (type) {
       case TinyStagePointerType.DOWN:
         if (true == inRange(stage, globalX, globalY)) {
