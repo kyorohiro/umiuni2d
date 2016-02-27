@@ -1,6 +1,5 @@
 part of littleui;
 
-
 abstract class LittleUIScrollerInfo {
   double get top;
   double get left;
@@ -8,7 +7,7 @@ abstract class LittleUIScrollerInfo {
   double get bottom;
   //LittleUIObject getIndex(int i);
   void onAttach(LittleUIScroller parent);
-  void updateInRange(TinyDisplayObject body, TinyDisplayObject topLayer,double left, double top, double right, double bottom);
+  void updateInRange(TinyDisplayObject body, TinyDisplayObject topLayer, double left, double top, double right, double bottom);
 }
 
 class LittleUIScroller extends LittleUIObject {
@@ -18,16 +17,16 @@ class LittleUIScroller extends LittleUIObject {
   int tail = 0;
   LittleUIObject body;
   LittleUIObject topLayer;
-  LittleUIScroller(this.builder,  this.info,{double width:100.0, double height:100.0,isFullWidth: true, isFullHeight: true}) : super(width, height, isFullWidth: isFullWidth, isFullHeight: isFullHeight) {
+  LittleUIScroller(this.builder, this.info, {double width: 100.0, double height: 100.0, isFullWidth: true, isFullHeight: true}) : super(width, height, isFullWidth: isFullWidth, isFullHeight: isFullHeight) {
     body = new LittleUIObject(w, h, isFullWidth: true, isFullHeight: true);
-    topLayer= new LittleUIObject(w, h, isFullWidth: true, isFullHeight: true);
+    topLayer = new LittleUIObject(w, h, isFullWidth: true, isFullHeight: true);
     body.backgroundColor = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     topLayer.backgroundColor = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     addChild(body);
     addChild(topLayer);
 //    this.backgroundColor = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
     //new Future((){
-      this.info.onAttach(this);
+    this.info.onAttach(this);
     //});
   }
 
@@ -59,7 +58,7 @@ class LittleUIScroller extends LittleUIObject {
         speedY *= 0.85;
       }
 
-      if (!(-1 * this.body.y+this.body.h/2  > info.bottom && speedY > 0)) {
+      if (!(-1 * this.body.y + this.body.h / 2 > info.bottom && speedY > 0)) {
         if (!(this.body.y > info.top && speedY < 0)) {
           body.mat.translate(0.0, -1 * speedY, 0.0);
         }
@@ -71,7 +70,7 @@ class LittleUIScroller extends LittleUIObject {
 
       //
       //
-      info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x+this.w, this.body.y-this.h);
+      info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
 
       new Future(() {
         stage.markPaintshot();
@@ -80,7 +79,7 @@ class LittleUIScroller extends LittleUIObject {
   }
 
   bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double globalX, double globalY) {
-  //  print("======================XXXX ${y} ${speedY} ${isPush}");
+    //  print("======================XXXX ${y} ${speedY} ${isPush}");
     switch (type) {
       case TinyStagePointerType.DOWN:
         if (true == inRange(stage, globalX, globalY)) {
@@ -100,7 +99,7 @@ class LittleUIScroller extends LittleUIObject {
             isPush = false;
             stage.markPaintshot();
           } else {
-            if (!(-1 * this.body.y+this.body.h/2 > info.bottom && (prevY - globalY) > 0)) {
+            if (!(-1 * this.body.y + this.body.h / 2 > info.bottom && (prevY - globalY) > 0)) {
               if (!(this.body.y > info.top && (prevY - globalY) < 0)) {
                 body.mat.translate(0.0, -1 * (prevY - globalY), 0.0);
               }
