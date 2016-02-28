@@ -10,6 +10,11 @@ abstract class LittleUIScrollerInfo {
   void updateInRange(TinyDisplayObject body, TinyDisplayObject topLayer, double left, double top, double right, double bottom);
 }
 
+class LittleUIScrollerInnerInfo {
+  bool isPush = false;
+  double prevY = 0.0;
+}
+
 class LittleUIScroller extends LittleUIObject {
   TinyGameBuilder builder;
   LittleUIScrollerInfo info;
@@ -36,9 +41,16 @@ class LittleUIScroller extends LittleUIObject {
     canvas.drawRect(stage, new TinyRect(0.0, 0.0, w, h), p);
   }
 
-  bool isPush = false;
-  double prevY = 0.0;
-  double speedY = 0.0;
+  //bool isPush = false;
+  //double prevY = 0.0;
+  //double speedY = 0.0;
+  Map<int, LittleUIScrollerInnerInfo> infos = {};
+  LittleUIScrollerInnerInfo getInfo(int id) {
+    if (false == infos.containsKey(id)) {
+      infos[id] = new LittleUIScrollerInnerInfo();
+    }
+    return infos[id];
+  }
 
   inRange(TinyStage stage, double globalX, double globalY) {
     Vector3 v = stage.getCurrentPositionOnDisplayObject(globalX, globalY);
@@ -49,30 +61,39 @@ class LittleUIScroller extends LittleUIObject {
     }
   }
 
+  double speedY = 0.0;
   void onTick(TinyStage stage, int timeStamp) {
-    //print("======================ZZZZ ${y} ${speedY} ${isPush}");
-    if (isPush == false && speedY != 999.0 && (-1.0 > speedY || speedY > 1.0)) {
+    //      print("#--#${speedY} ${infos.length}");
+    bool needUpdata = false;
+    if(infos.length != 0) {
+      return;
+    }
+    if ((-1.0 > speedY || speedY > 1.0)) {
       if (speedY > 0) {
-        speedY *= 0.85;
+        speedY *= 0.95;
       } else {
-        speedY *= 0.85;
+        speedY *= 0.95;
       }
 
       if (!(-1 * this.body.y + this.body.h / 2 > info.bottom && speedY > 0)) {
         if (!(this.body.y > info.top && speedY < 0)) {
           body.mat.translate(0.0, -1 * speedY, 0.0);
+          needUpdata = true;
         }
       }
-      //
-      if (this.body.y > info.top && speedY < 0) {
-        body.mat.translate(0.0, -1 * (this.body.y - info.top) / 10, 0.0);
-      }
-
+    }
+    //
+    if (this.body.y > info.top + 1) {
+      body.mat.translate(0.0, -1 * (this.body.y - info.top) / 10, 0.0);
+      needUpdata = true;
+    }
+    if (needUpdata) {
       //
       //
       info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
 
       new Future(() {
+        print("#++#${speedY} ${infos.length}");
         stage.markPaintshot();
       });
     }
@@ -83,39 +104,48 @@ class LittleUIScroller extends LittleUIObject {
     switch (type) {
       case TinyStagePointerType.DOWN:
         if (true == inRange(stage, globalX, globalY)) {
-          isPush = true;
-          prevY = globalY;
-          speedY = 999.0;
+          LittleUIScrollerInnerInfo i = getInfo(id);
+          i.isPush = true;
+          i.prevY = globalY;
           stage.markPaintshot();
         }
         break;
       case TinyStagePointerType.UP:
-        isPush = false;
+        LittleUIScrollerInnerInfo i = getInfo(id);
+        i.isPush = false;
         stage.markPaintshot();
+        infos.remove(id);
         break;
       case TinyStagePointerType.MOVE:
-        if (isPush == true) {
+        LittleUIScrollerInnerInfo i = getInfo(id);
+        if (i.isPush == true) {
           if (false == inRange(stage, globalX, globalY)) {
-            isPush = false;
+            i.isPush = false;
             stage.markPaintshot();
           } else {
-            if (!(-1 * this.body.y + this.body.h / 2 > info.bottom && (prevY - globalY) > 0)) {
-              if (!(this.body.y > info.top && (prevY - globalY) < 0)) {
-                body.mat.translate(0.0, -1 * (prevY - globalY), 0.0);
+            if (!(-1 * this.body.y + this.body.h / 2 > info.bottom && (i.prevY - globalY) > 0)) {
+              if (!(this.body.y > info.top && (i.prevY - globalY) < 0)) {
+                print("---------${i.prevY} - ${globalY}");
+                body.mat.translate(0.0, -1 * (i.prevY - globalY), 0.0);
+                info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
+              } else {
+                body.mat.translate(0.0, -1 * (i.prevY - globalY) / 3, 0.0);
               }
             }
             if (speedY == 999.0) {
-              speedY = prevY - globalY;
+              speedY = i.prevY - globalY;
             } else {
-              speedY = (prevY - globalY) - speedY;
+              speedY = (i.prevY - globalY) - speedY;
             }
             stage.markPaintshot();
-            prevY = globalY;
+            i.prevY = globalY;
           }
         }
         break;
       case TinyStagePointerType.CANCEL:
-        isPush = false;
+//        LittleUIScrollerInnerInfo i = getInfo(id);
+//        isPush = false;
+        infos.clear();
         stage.markPaintshot();
         break;
     }
