@@ -22,7 +22,7 @@ class LittleUIScroller extends LittleUIObject {
   int head = 0;
   int tail = 0;
   double spring = 0.01;
-  double braking = 0.95;
+  double braking = 0.97;
   LittleUIObject body;
   LittleUIObject topLayer;
   LittleUIScroller(this.builder, this.info, {double width: 100.0, double height: 100.0, isFullWidth: true, isFullHeight: true}) : super(width, height, isFullWidth: isFullWidth, isFullHeight: isFullHeight) {
@@ -71,18 +71,23 @@ class LittleUIScroller extends LittleUIObject {
     bool needUpdata = false;
     if ((-1.0 > speedY || speedY > 1.0)) {
       if (speedY > 0) {
-        speedY *=braking;
+        speedY *= braking;
       } else {
         speedY *= braking;
       }
 
+      body.mat.translate(0.0, -1 * speedY, 0.0);
+      needUpdata = true;
+    }
+    if ((-1.0 > speedX || speedX > 1.0)) {
+      if (speedX > 0) {
+        speedX *= braking;
+      } else {
+        speedX *= braking;
+      }
 
-      //if (!(-1 * this.body.y + this.body.h*1.0> info.bottom && speedY > 0)) {
-      //  if (!(this.body.y > info.top && speedY < 0)) {
-          body.mat.translate(0.0, -1 * speedY, 0.0);
-          needUpdata = true;
-        //}
-      //}
+      body.mat.translate(-1 * speedX, 0.0, 0.0);
+      needUpdata = true;
     }
     return needUpdata;
   }
@@ -129,7 +134,6 @@ class LittleUIScroller extends LittleUIObject {
     if (infos.length != 0) {
       return;
     }
-
 
     //
     needUpdata = needUpdata || brake();
