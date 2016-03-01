@@ -21,7 +21,7 @@ class LittleUIScroller extends LittleUIObject {
   LittleUIScrollerInfo info;
   int head = 0;
   int tail = 0;
-  double spring = 0.01;
+  double spring = 0.1;
   double braking = 0.97;
   LittleUIObject body;
   LittleUIObject topLayer;
@@ -67,7 +67,15 @@ class LittleUIScroller extends LittleUIObject {
   double speedY = 0.0;
   double speedX = 0.0;
 
-  bool brake() {
+  bool brake(int curr, int prev) {
+
+    double late = 1.0;
+    if(prev != 0 && curr !=prev) {
+      late = (curr-prev)/10;
+    }
+    if(late > 3.0) {
+      late = 1.0;
+    }
     bool needUpdata = false;
     if ((-1.0 > speedY || speedY > 1.0)) {
       if (speedY > 0) {
@@ -92,10 +100,19 @@ class LittleUIScroller extends LittleUIObject {
     return needUpdata;
   }
 
-  bool bounce() {
+  bool bounce(int curr, int prev) {
+
+    double late = 1.0;
+    if(prev != 0 && curr !=prev) {
+      late = (curr-prev)/10;
+    }
+    if(late > 3.0) {
+      late = 1.0;
+    }
+      //  print("##bounced ${info.top} ${info.bottom} ${body.y} ${body.h} ${curr} ${prev} ${late} ${(curr-prev)}");
     bool needUpdata = false;
     if (this.body.y > info.top + 1) {
-      body.mat.translate(0.0, -1 * (this.body.y - info.top) * spring, 0.0);
+      body.mat.translate(0.0, -1 * (this.body.y - info.top) * spring* late, 0.0);
       needUpdata = true;
     } else {
       double d = info.bottom;
@@ -104,8 +121,7 @@ class LittleUIScroller extends LittleUIObject {
       }
       //
       if ((-1 * this.body.y + this.body.h) > d + 1) {
-        //      print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
-        body.mat.translate(0.0, -1 * (d - (-1 * this.body.y + this.body.h)) * spring, 0.0);
+        body.mat.translate(0.0, -1 * (d - (-1 * this.body.y + this.body.h)) * spring*late, 0.0);
         needUpdata = true;
       }
     }
@@ -125,9 +141,14 @@ class LittleUIScroller extends LittleUIObject {
         needUpdata = true;
       }
     }
+    if(needUpdata){
+      speedX = 0.0;
+      speedY = 0.0;
+    }
     return needUpdata;
   }
 
+  int prevTime = 0;
   void onTick(TinyStage stage, int timeStamp) {
     //      print("#--#${speedY} ${infos.length}");
     bool needUpdata = false;
@@ -136,8 +157,12 @@ class LittleUIScroller extends LittleUIObject {
     }
 
     //
-    needUpdata = needUpdata || brake();
-    needUpdata = needUpdata || bounce();
+    if(prevTime == 0) {
+      prevTime = timeStamp;
+    }
+    needUpdata = needUpdata || bounce(timeStamp, prevTime);
+    needUpdata = needUpdata || brake(timeStamp, prevTime);
+    prevTime = timeStamp;
     if (needUpdata) {
       //
       //
@@ -200,7 +225,7 @@ class LittleUIScroller extends LittleUIObject {
             //
             if (!(-1 * this.body.x + this.body.w / 2 > info.bottom && (i.prevX - globalX) > 0)) {
               if (!(this.body.x > info.left && (i.prevX - globalX) < 0)) {
-                print("---------${i.prevX} - ${globalX}");
+                //print("---------${i.prevX} - ${globalX}");
                 body.mat.translate(-1 * (i.prevX - globalX), 0.0, 0.0);
                 info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
               } else {
