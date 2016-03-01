@@ -21,6 +21,8 @@ class LittleUIScroller extends LittleUIObject {
   LittleUIScrollerInfo info;
   int head = 0;
   int tail = 0;
+  double spring = 0.01;
+  double braking = 0.95;
   LittleUIObject body;
   LittleUIObject topLayer;
   LittleUIScroller(this.builder, this.info, {double width: 100.0, double height: 100.0, isFullWidth: true, isFullHeight: true}) : super(width, height, isFullWidth: isFullWidth, isFullHeight: isFullHeight) {
@@ -64,60 +66,74 @@ class LittleUIScroller extends LittleUIObject {
 
   double speedY = 0.0;
   double speedX = 0.0;
+
+  bool brake() {
+    bool needUpdata = false;
+    if ((-1.0 > speedY || speedY > 1.0)) {
+      if (speedY > 0) {
+        speedY *=braking;
+      } else {
+        speedY *= braking;
+      }
+
+
+      //if (!(-1 * this.body.y + this.body.h*1.0> info.bottom && speedY > 0)) {
+      //  if (!(this.body.y > info.top && speedY < 0)) {
+          body.mat.translate(0.0, -1 * speedY, 0.0);
+          needUpdata = true;
+        //}
+      //}
+    }
+    return needUpdata;
+  }
+
+  bool bounce() {
+    bool needUpdata = false;
+    if (this.body.y > info.top + 1) {
+      body.mat.translate(0.0, -1 * (this.body.y - info.top) * spring, 0.0);
+      needUpdata = true;
+    } else {
+      double d = info.bottom;
+      if (this.body.h > (info.bottom - info.top)) {
+        d = body.h;
+      }
+      //
+      if ((-1 * this.body.y + this.body.h) > d + 1) {
+        //      print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
+        body.mat.translate(0.0, -1 * (d - (-1 * this.body.y + this.body.h)) * spring, 0.0);
+        needUpdata = true;
+      }
+    }
+    //
+    if (this.body.x > info.left + 1) {
+      body.mat.translate(-1 * (this.body.x - info.left) * spring, 0.0, 0.0);
+      needUpdata = true;
+    } else {
+      double d = info.right;
+      if (this.body.w > (info.right - info.left)) {
+        d = body.w;
+      }
+      //
+      if ((-1 * this.body.x + this.body.w) > d + 1) {
+//        print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
+        body.mat.translate(-1 * (d - (-1 * this.body.x + this.body.w)) * spring, 0.0, 0.0);
+        needUpdata = true;
+      }
+    }
+    return needUpdata;
+  }
+
   void onTick(TinyStage stage, int timeStamp) {
     //      print("#--#${speedY} ${infos.length}");
     bool needUpdata = false;
     if (infos.length != 0) {
       return;
     }
-    /*
-    if ((-1.0 > speedY || speedY > 1.0)) {
-      if (speedY > 0) {
-        speedY *= 0.95;
-      } else {
-        speedY *= 0.95;
-      }
 
 
-      if (!(-1 * this.body.y + this.body.h*1.0> info.bottom && speedY > 0)) {
-        if (!(this.body.y > info.top && speedY < 0)) {
-          body.mat.translate(0.0, -1 * speedY, 0.0);
-          needUpdata = true;
-        }
-      }
-    }*/
     //
-    if (this.body.y > info.top + 1) {
-      body.mat.translate(0.0, -1 * (this.body.y - info.top) / 10, 0.0);
-      needUpdata = true;
-    } else {
-      double d = info.bottom;
-      if(this.body.h > (info.bottom-info.top)){
-        d = body.h;
-      }
-      //
-      if ((-1 * this.body.y + this.body.h) > d+1) {
-  //      print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
-        body.mat.translate(0.0, -1 * (d - (-1 * this.body.y + this.body.h)) / 10, 0.0);
-        needUpdata = true;
-      }
-    }
-    //
-    if (this.body.x > info.left + 1) {
-      body.mat.translate(-1 *(this.body.x - info.left) / 10, 0.0,0.0);
-      needUpdata = true;
-    }else {
-      double d = info.right;
-      if(this.body.w > (info.right-info.left)){
-        d = body.w;
-      }
-      //
-      if ((-1 * this.body.x + this.body.w) > d+1) {
-//        print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
-        body.mat.translate(-1 * (d - (-1 * this.body.x + this.body.w)) / 10, 0.0, 0.0);
-        needUpdata = true;
-      }
-    }
+    needUpdata = needUpdata || brake();
+    needUpdata = needUpdata || bounce();
     if (needUpdata) {
       //
       //
@@ -164,7 +180,7 @@ class LittleUIScroller extends LittleUIObject {
             } else if (-1 * this.body.y + this.body.h * 1 > info.bottom) {
               body.mat.translate(0.0, -1 * (i.prevY - globalY) / 3, 0.0);
             } else {
-            //  print("---------${i.prevY} - ${globalY}");
+              //  print("---------${i.prevY} - ${globalY}");
               body.mat.translate(0.0, -1 * (i.prevY - globalY), 0.0);
               info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
             }
