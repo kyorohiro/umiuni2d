@@ -13,6 +13,7 @@ abstract class LittleUIScrollerInfo {
 class LittleUIScrollerInnerInfo {
   bool isPush = false;
   double prevY = 0.0;
+  double prevX = 0.0;
 }
 
 class LittleUIScroller extends LittleUIObject {
@@ -62,12 +63,14 @@ class LittleUIScroller extends LittleUIObject {
   }
 
   double speedY = 0.0;
+  double speedX = 0.0;
   void onTick(TinyStage stage, int timeStamp) {
     //      print("#--#${speedY} ${infos.length}");
     bool needUpdata = false;
-    if(infos.length != 0) {
+    if (infos.length != 0) {
       return;
     }
+    /*
     if ((-1.0 > speedY || speedY > 1.0)) {
       if (speedY > 0) {
         speedY *= 0.95;
@@ -75,17 +78,45 @@ class LittleUIScroller extends LittleUIObject {
         speedY *= 0.95;
       }
 
-      if (!(-1 * this.body.y + this.body.h / 2 > info.bottom && speedY > 0)) {
+
+      if (!(-1 * this.body.y + this.body.h*1.0> info.bottom && speedY > 0)) {
         if (!(this.body.y > info.top && speedY < 0)) {
           body.mat.translate(0.0, -1 * speedY, 0.0);
           needUpdata = true;
         }
       }
-    }
+    }*/
     //
     if (this.body.y > info.top + 1) {
       body.mat.translate(0.0, -1 * (this.body.y - info.top) / 10, 0.0);
       needUpdata = true;
+    } else {
+      double d = info.bottom;
+      if(this.body.h > (info.bottom-info.top)){
+        d = body.h;
+      }
+      //
+      if ((-1 * this.body.y + this.body.h) > d) {
+  //      print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
+        body.mat.translate(0.0, -1 * (d - (-1 * this.body.y + this.body.h)) / 10, 0.0);
+        needUpdata = true;
+      }
+    }
+    //
+    if (this.body.x > info.left + 1) {
+      body.mat.translate(-1 *(this.body.x - info.left) / 10, 0.0,0.0);
+      needUpdata = true;
+    }else {
+      double d = info.right;
+      if(this.body.w > (info.right-info.left)){
+        d = body.w;
+      }
+      //
+      if ((-1 * this.body.x + this.body.w) > d) {
+//        print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
+        body.mat.translate(-1 * (d - (-1 * this.body.x + this.body.w)) / 10, 0.0, 0.0);
+        needUpdata = true;
+      }
     }
     if (needUpdata) {
       //
@@ -93,13 +124,14 @@ class LittleUIScroller extends LittleUIObject {
       info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
 
       new Future(() {
-        print("#++#${speedY} ${infos.length}");
+        //print("#++#${speedY} ${infos.length}");
         stage.markPaintshot();
       });
     }
   }
 
   bool onTouch(TinyStage stage, int id, TinyStagePointerType type, double globalX, double globalY) {
+    //print("${this.body.y}+${this.body.h} > ${info.bottom}");
     //  print("======================XXXX ${y} ${speedY} ${isPush}");
     switch (type) {
       case TinyStagePointerType.DOWN:
@@ -107,6 +139,7 @@ class LittleUIScroller extends LittleUIObject {
           LittleUIScrollerInnerInfo i = getInfo(id);
           i.isPush = true;
           i.prevY = globalY;
+          i.prevX = globalX;
           stage.markPaintshot();
         }
         break;
@@ -123,22 +156,48 @@ class LittleUIScroller extends LittleUIObject {
             i.isPush = false;
             stage.markPaintshot();
           } else {
-            if (!(-1 * this.body.y + this.body.h / 2 > info.bottom && (i.prevY - globalY) > 0)) {
-              if (!(this.body.y > info.top && (i.prevY - globalY) < 0)) {
-                print("---------${i.prevY} - ${globalY}");
-                body.mat.translate(0.0, -1 * (i.prevY - globalY), 0.0);
-                info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
-              } else {
-                body.mat.translate(0.0, -1 * (i.prevY - globalY) / 3, 0.0);
-              }
+            //
+            //
+            //if (!(-1 * this.body.y + this.body.h*1 > info.bottom && (i.prevY - globalY) > 0)) {
+            if (this.body.y > info.top && (i.prevY - globalY) < 0) {
+              body.mat.translate(0.0, -1 * (i.prevY - globalY) / 3, 0.0);
+            } else if (-1 * this.body.y + this.body.h * 1 > info.bottom) {
+              body.mat.translate(0.0, -1 * (i.prevY - globalY) / 3, 0.0);
+            } else {
+              print("---------${i.prevY} - ${globalY}");
+              body.mat.translate(0.0, -1 * (i.prevY - globalY), 0.0);
+              info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
             }
+            //}
+            //
             if (speedY == 999.0) {
               speedY = i.prevY - globalY;
             } else {
               speedY = (i.prevY - globalY) - speedY;
             }
+
+            //
+            //
+            if (!(-1 * this.body.x + this.body.w / 2 > info.bottom && (i.prevX - globalX) > 0)) {
+              if (!(this.body.x > info.left && (i.prevX - globalX) < 0)) {
+                print("---------${i.prevX} - ${globalX}");
+                body.mat.translate(-1 * (i.prevX - globalX), 0.0, 0.0);
+                info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
+              } else {
+                body.mat.translate(-1 * (i.prevX - globalX) / 3, 0.0, 0.0);
+              }
+            }
+            //
+            //
+            if (speedX == 999.0) {
+              speedX = i.prevX - globalX;
+            } else {
+              speedX = (i.prevX - globalX) - speedX;
+            }
+
             stage.markPaintshot();
             i.prevY = globalY;
+            i.prevX = globalX;
           }
         }
         break;
