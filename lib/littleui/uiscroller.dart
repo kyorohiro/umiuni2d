@@ -96,7 +96,7 @@ class LittleUIScroller extends LittleUIObject {
         d = body.h;
       }
       //
-      if ((-1 * this.body.y + this.body.h) > d) {
+      if ((-1 * this.body.y + this.body.h) > d+1) {
   //      print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
         body.mat.translate(0.0, -1 * (d - (-1 * this.body.y + this.body.h)) / 10, 0.0);
         needUpdata = true;
@@ -112,7 +112,7 @@ class LittleUIScroller extends LittleUIObject {
         d = body.w;
       }
       //
-      if ((-1 * this.body.x + this.body.w) > d) {
+      if ((-1 * this.body.x + this.body.w) > d+1) {
 //        print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
         body.mat.translate(-1 * (d - (-1 * this.body.x + this.body.w)) / 10, 0.0, 0.0);
         needUpdata = true;
@@ -164,7 +164,7 @@ class LittleUIScroller extends LittleUIObject {
             } else if (-1 * this.body.y + this.body.h * 1 > info.bottom) {
               body.mat.translate(0.0, -1 * (i.prevY - globalY) / 3, 0.0);
             } else {
-              print("---------${i.prevY} - ${globalY}");
+            //  print("---------${i.prevY} - ${globalY}");
               body.mat.translate(0.0, -1 * (i.prevY - globalY), 0.0);
               info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
             }
