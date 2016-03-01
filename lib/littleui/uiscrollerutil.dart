@@ -1,6 +1,6 @@
 part of littleui;
 
-class InfoSize {
+class LittleUIScrollerInfoSize {
   double baseSize = 100.0;
   List<double> sizePerItem = [];
   List<double> totalSizePerItem = [];
