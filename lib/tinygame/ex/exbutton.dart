@@ -15,8 +15,6 @@ class TExpansionButton extends TExpansionBase {
   TExpansionButtonCallback onTouchCallback;
   TExpansionButtonCheckFocus handleCheckFocus;
 
-
-
   TExpansionButton(TinyDisplayObject target, this.buttonName,this.onTouchCallback,
     {this.exclusiveTouch:true, this.handleCheckFocus:null}): super(target){
   }
