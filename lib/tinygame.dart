@@ -11,6 +11,7 @@ import 'tinyutil.dart';
 part 'tinygame/displayobject.dart';
 part 'tinygame/displayobject_expansion.dart';
 part 'tinygame/displayobject_expansion_item.dart';
+part 'tinygame/ex/exbutton.dart';
 part 'tinygame/image.dart';
 part 'tinygame/gameroot.dart';
 part 'tinygame/builder.dart';

@@ -2,7 +2,7 @@ part of littleui;
 
 typedef LittleUIPaintFunc(TinyStage stage, TinyCanvas canvas);
 
-class LittleUIObject extends TinyDisplayObject {
+class LittleUIObject extends TinyDisplayObjectEx {
   List<LittleUIPaintFunc> func = [];
   double w = 0.0;
   double h = 0.0;
