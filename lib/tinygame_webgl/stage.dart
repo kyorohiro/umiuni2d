@@ -132,9 +132,11 @@ class TinyWebglStage extends Object with TinyStage {
         if (touchs.containsKey(t.identifier)) {
           countKickMv++;
           //if(countKickMv < 3) {
+//          print("MOVE ${touchs}");
           kickTouch(this, t.identifier + 1, TinyStagePointerType.MOVE, x.toDouble(), y.toDouble());
           //}
         } else {
+//          print("DOWN ${touchs}");
           touchs[t.identifier] = t;
           kickTouch(this, t.identifier + 1, TinyStagePointerType.DOWN, x.toDouble(), y.toDouble());
         }
@@ -166,6 +168,7 @@ class TinyWebglStage extends Object with TinyStage {
       e.preventDefault();
       if (tappedEventTime + 500 < lastUpdateTime) {
         //print("down offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+        //print("down");
         isTap = true;
         kickTouch(this, 0, TinyStagePointerType.DOWN, e.offset.x.toDouble(), e.offset.y.toDouble());
       }
@@ -193,6 +196,7 @@ class TinyWebglStage extends Object with TinyStage {
       e.preventDefault();
       if (tappedEventTime + 500 < lastUpdateTime) {
         //  print("leave offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
+        //print("move");
         if (isTap == true) {
           kickTouch(this, 0, TinyStagePointerType.CANCEL, e.offset.x.toDouble(), e.offset.y.toDouble());
           isTap = false;
@@ -205,7 +209,10 @@ class TinyWebglStage extends Object with TinyStage {
         //print("move offset=${e.offsetX}:${e.offsetY}  client=${e.clientX}:${e.clientY} screen=${e.screenX}:${e.screenY}");
         if (isTap == true) {
           kickTouch(this, 0, TinyStagePointerType.MOVE, e.offset.x.toDouble(), e.offset.y.toDouble());
-        }
+        } //else {
+        //  kickTouch(this, 0, TinyStagePointerType.DOWN, e.offset.x.toDouble(), e.offset.y.toDouble());
+        //  isTap == true;
+        //}
       }
     });
 
