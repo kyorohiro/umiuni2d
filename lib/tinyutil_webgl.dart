@@ -37,14 +37,14 @@ class CanvasElementText {
     canvasElm.width = width;
     canvasElm.height = height;
     context.font = "${fontStyle} ${fontsize}px ${fontFamily}";
-    context.strokeStyle = "rgb(2,169,159)";
+    context.strokeStyle = "${color}";
     context.fillStyle = "${color}";
     return context;
   }
 
 
   static html.CanvasElement makeImage(String message,
-    {String color: "rgb(2,169,159)", num fontsize: 25, String fontStyle: "bold",
+    {String color: "rgb(2,9,9)", num fontsize: 25, String fontStyle: "bold",
      String fontFamily: "Century Gothic",
      int height: 300, int width: 300, html.CanvasElement canvasElm: null,
      CanvasElementTextAlign align:CanvasElementTextAlign.center_center,
