@@ -23,9 +23,14 @@ class TExpansionTap extends TExpansionBase {
     //print("${id} ${type} ${infoTap[id]} ${infoTap} ${infoTap.containsKey(id)}");
     switch (type) {
       case TinyStagePointerType.DOWN:
+        Vector3 v = stage.getCurrentPositionOnDisplayObject(globalX, globalY);
         infoX[id] = globalX;
         infoY[id] = globalY;
-        infoTap[id] = true;
+        if(target.checkFocus(v.x, v.y)) {
+          infoTap[id] = true;
+        } else {
+          infoTap[id] = false; 
+        }
         break;
       case TinyStagePointerType.MOVE:
         if (infoTap.containsKey(id)) {

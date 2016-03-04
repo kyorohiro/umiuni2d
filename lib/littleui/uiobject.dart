@@ -57,4 +57,8 @@ class LittleUIObject extends TinyDisplayObjectEx {
     TinyPaint p = new TinyPaint(color:backgroundColor);
     canvas.drawRect(stage, new TinyRect(0.0, 0.0, w, h), p);
   }
+
+  bool checkFocus(double localX, double localY) {
+    return (0<localX && localX< w && 0 < localY && localY < h );
+  }
 }
