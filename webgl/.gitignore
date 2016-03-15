@@ -1,0 +1,11 @@
+.buildlog
+.DS_Store
+.idea
+.packages
+.pub/
+.atom/
+.settings/
+.project
+build/
+packages
+pubspec.lock
