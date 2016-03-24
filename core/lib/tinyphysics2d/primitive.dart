@@ -100,7 +100,9 @@ class CirclePrimitive extends Primitive {
 
   Vector3 calcXYDistanceDirection(Primitive p) {
     Vector3 vv = p.xy - this.xy;
-    return vv.normalize();
+//    return vv.normalize();
+    vv.normalize();
+    return vv;
   }
 
   void collision(Primitive p) {
