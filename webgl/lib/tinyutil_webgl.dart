@@ -32,7 +32,10 @@ enum CanvasElementTextAlign {
 class CanvasElementText {
 
 
-  static html.CanvasRenderingContext2D resetCanvasImage({int fontsize: 25, String fontStyle: "bold", String fontFamily: "Century Gothic", String color: "rgb(2,169,159)", int height: 300, int width: 300, html.CanvasElement canvasElm: null}) {
+  static html.CanvasRenderingContext2D resetCanvasImage(
+    {
+      int fontsize: 25, String fontStyle: "bold",
+    String fontFamily: "Century Gothic", String color: "rgb(2,169,159)", int height: 300, int width: 300, html.CanvasElement canvasElm: null}) {
     html.CanvasRenderingContext2D context = canvasElm.context2D;
     canvasElm.width = width;
     canvasElm.height = height;

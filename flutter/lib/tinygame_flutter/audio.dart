@@ -3,7 +3,9 @@ part of tinygame_flutter;
 class TinyFlutterAudioSource extends TinyAudioSource {
   MediaPlayerProxy player;
   MojoDataPipeConsumer data;
-  TinyFlutterAudioSource(this.player, this.data) {}
+  TinyFlutterAudioSource(this.player, this.data) {
+    ;
+  }
 
   static Future<TinyFlutterAudioSource> create(
       MediaServiceProxy service, MojoDataPipeConsumer data) async {

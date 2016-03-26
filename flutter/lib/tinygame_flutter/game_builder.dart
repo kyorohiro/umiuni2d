@@ -9,7 +9,9 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
   bool useDrawVertexForPrimtive = false;
   TinyFlutterAudioManager audioManager = new TinyFlutterAudioManager();
 
-  TinyGameBuilderForFlutter({this.assetsRoot:"web/"}) {}
+  TinyGameBuilderForFlutter({this.assetsRoot:"web/"}) {
+    ;
+  }
 
   TinyStage createStage(TinyDisplayObject root) {
     return new TinyFlutterStage(this, root,tickInPerFrame:tickInPerFrame, useTestCanvas:useTestCanvas, useDrawVertexForPrimtive:useDrawVertexForPrimtive);

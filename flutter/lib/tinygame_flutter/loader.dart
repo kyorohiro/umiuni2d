@@ -4,7 +4,9 @@ part of tinygame_flutter;
 
 class TinyFlutterImage implements TinyImage {
   ImageInfo rawImage;
-  TinyFlutterImage(this.rawImage) {}
+  TinyFlutterImage(this.rawImage) {
+    ;
+  }
   int get w => rawImage.image.width;
   int get h => rawImage.image.height;
   @override

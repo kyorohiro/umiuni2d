@@ -2,7 +2,9 @@ part of tinygame_flutter;
 
 class TinyFlutterCanvas extends TinyCanvas {
   Canvas canvas;
-  TinyFlutterCanvas(this.canvas) {}
+  TinyFlutterCanvas(this.canvas) {
+    ;
+  }
 
   Paint toPaint(TinyPaint p) {
     Paint pp = new Paint();

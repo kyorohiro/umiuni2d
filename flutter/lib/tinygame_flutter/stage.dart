@@ -211,5 +211,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
 class TouchPoint {
   double x;
   double y;
-  TouchPoint(this.x, this.y) {}
+  TouchPoint(this.x, this.y) {
+    ;
+  }
 }

@@ -3,6 +3,7 @@ part of tinygame_flutter;
 class TinyFlutterFile extends TinyFile {
   File f;
   TinyFlutterFile(this.f) {
+    ;
   }
 
   init() async {
