@@ -9,6 +9,7 @@ import 'dart:web_gl';
 import 'dart:web_audio';
 import 'dart:typed_data';
 import 'dart:convert' as conv;
+import 'tinyutil_webgl.dart';
 
 part 'tinygame_webgl/stage.dart';
 part 'tinygame_webgl/util.dart';
@@ -19,3 +20,5 @@ part 'tinygame_webgl/image.dart';
 part 'tinygame_webgl/canvas.dart';
 part 'tinygame_webgl/context.dart';
 part 'tinygame_webgl/gamebuilder.dart';
+//
+part 'tinygame_webgl/textobject.dart';

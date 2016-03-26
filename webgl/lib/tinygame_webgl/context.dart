@@ -12,6 +12,8 @@ class TinyWebglContext {
     this.height = height;
     if (selectors == null) {
       _canvasElement = new CanvasElement(width: widht.toInt(), height: height.toInt());
+      _canvasElement.style.width = "${widht.toInt()}px";
+      _canvasElement.style.height = "${height.toInt()}px";
       document.body.append(_canvasElement);
     } else {
       _canvasElement = window.document.querySelector(selectors);

@@ -7,14 +7,15 @@ abstract class TinyGameBuilder {
 
   TinyStage createStage(TinyDisplayObject root);
   Future<TinyAudioSource> loadAudio(String path);
-  Future<String> loadStringBase(String path);
-  Future<TinyImage> loadImageBase(String path);
-  Future<Uint8List> loadBytesBase(String path);
   Future<TinyFile> loadFile(String name);
   Future<List<String>> getFiles();
   Future<String> getLocale();
   Future<double> getDisplayDensity();
+  Future<String> loadStringBase(String path);
+  Future<TinyImage> loadImageBase(String path);
+  Future<Uint8List> loadBytesBase(String path);
 
+  //
   Future<TinyImage> loadImage(String path) async {
     if (cach.containsKey(path)) {
       return cach[path];
