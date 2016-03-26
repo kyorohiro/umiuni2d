@@ -2,6 +2,7 @@ library tinyutil.webgl;
 
 import 'dart:html' as html;
 import 'dart:async';
+import 'package:umiuni2d/tinygame.dart';
 
 class ImageElementResizer {
   static Future<html.ImageElement> resize(html.ImageElement imageTmp, {int nextHeight: 300}) async {
@@ -34,37 +35,71 @@ class CanvasElementText {
 
   static html.CanvasRenderingContext2D resetCanvasImage(
     {
-      int fontsize: 25, String fontStyle: "bold",
-    String fontFamily: "Century Gothic", String color: "rgb(2,169,159)", int height: 300, int width: 300, html.CanvasElement canvasElm: null}) {
+      int fontSize: 25,
+      bool isBold:false, bool isItalic:false,
+      String fontFamily: "Century Gothic",
+      TinyColor fillStyle: null,
+      TinyColor strokeStyle: null,
+      int textureHeight: 300, int textureWidth: 300,
+      html.CanvasElement canvasElm: null
+    }) {
+    //
+    if (canvasElm == null) {
+      canvasElm = new html.CanvasElement();
+    }
+    if(fillStyle == null) {
+      fillStyle = TinyColor.black;
+    }
+    if(strokeStyle == null) {
+      strokeStyle = TinyColor.black;
+    }
+    canvasElm.style.width = "${textureWidth}px";
+    canvasElm.style.height = "${textureHeight}px";
+    //
     html.CanvasRenderingContext2D context = canvasElm.context2D;
-    canvasElm.width = width;
-    canvasElm.height = height;
-    context.font = "${fontStyle} ${fontsize}px ${fontFamily}";
-    context.strokeStyle = "${color}";
-    context.fillStyle = "${color}";
+    canvasElm.width = textureWidth;
+    canvasElm.height = textureHeight;
+    String fontStyle = (isItalic?"italic ":"") + (isBold?"bold ":"");
+
+    context.font = "${fontStyle}${fontSize}px ${fontFamily}";
+    context.strokeStyle = fillStyle.toRGBAString();
+    context.fillStyle = strokeStyle.toRGBAString();
+    context.lineCap = "round";
+    context.lineJoin = "round";
     return context;
   }
 
 
   static html.CanvasElement makeImage(String message,
-    {String color: "rgb(2,9,9)", num fontsize: 25, String fontStyle: "bold",
+    {
+     TinyColor fillColor:null,
+     TinyColor strokeColor:null,
+     num fontsize: 25,
+     bool isBold:false, bool isItalic:false,
      String fontFamily: "Century Gothic",
-     int height: 300, int width: 300, html.CanvasElement canvasElm: null,
+     int height: 300,
+     int width: 300,
+     html.CanvasElement canvasElm: null,
      CanvasElementTextAlign align:CanvasElementTextAlign.center_center,
      bool resizeHeight:true}) {
+
     if (canvasElm == null) {
       canvasElm = new html.CanvasElement();
     }
 
+    canvasElm.style.width = "${width}px";
+    canvasElm.style.height = "${height}px";
+
     html.CanvasRenderingContext2D context =
-    resetCanvasImage(fontsize: fontsize, fontStyle: fontStyle, fontFamily: fontFamily, color: color, height: height, width: width, canvasElm: canvasElm);
+    resetCanvasImage(fontSize: fontsize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily,
+      fillStyle: fillColor, strokeStyle: strokeColor, textureHeight: height, textureWidth: width, canvasElm: canvasElm);
 
     TextLines lines = new TextLines.fromContext2D(context, message, width, fontsize);
     //
     if(resizeHeight == true) {
       if(lines.height > height) {
         canvasElm.height = (lines.height * 1.0).toInt();
-        resetCanvasImage(fontsize: fontsize, fontStyle: fontStyle, fontFamily: fontFamily, color: color, height: canvasElm.height, width: width, canvasElm: canvasElm);
+        resetCanvasImage(fontSize: fontsize, isBold: isBold, isItalic:isItalic, fontFamily: fontFamily, fillStyle: fillColor, textureHeight: canvasElm.height, textureWidth: width, canvasElm: canvasElm);
       }
     }
     //
@@ -91,14 +126,10 @@ class CanvasElementText {
       h += lines.fontHeights[i];
     }
 
-
     return canvasElm;
   }
 }
 
-class TextMetricsJS {
-
-}
 
 class TextLines {
   int _width = 0;

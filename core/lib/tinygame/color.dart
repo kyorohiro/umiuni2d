@@ -2,6 +2,9 @@ part of tinygame;
 
 
 class TinyColor {
+  static final TinyColor black = new TinyColor.argb(0xff, 0x00, 0x00, 0x00);
+  static final TinyColor white = new TinyColor.argb(0xff, 0xff, 0xff, 0xff);
+
   int value = 0;
   TinyColor(this.value) {}
   int get a => (value >> 24) & 0xff;
@@ -30,5 +33,9 @@ class TinyColor {
   @override
   String toString() {
     return "a:${a}, r:${r}, g:${g}, b:${b}";
+  }
+
+  String toRGBAString() {
+    return "rgba(${r},${g},${b},${af})";
   }
 }
