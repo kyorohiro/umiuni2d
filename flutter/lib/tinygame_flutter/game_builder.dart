@@ -70,15 +70,15 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
     return sky.window.devicePixelRatio;
   }
 
-  Future<TinyTextObjcet> createTextObject(
+  TinyTextObjcet createTextObject(
     String text, double textureWidth, double textureHeight,{
-      int fontSize: 25,
+      double fontSize: 25.0,
       bool isBold: false,
       bool isItalic: false,
       String fontFamily: "Century Gothic",
       var fillColor: null,
       var strokeColor: null,
-      var backgroundColor: null}) async {
+      var backgroundColor: null}) {
           return new TinyFlutterTextObject(text, textureWidth, textureHeight,
             fontSize: fontSize,
             isBold: isBold,

@@ -86,9 +86,9 @@ abstract class TinyGameBuilder {
     cachBytes.clear();
   }
 
-  Future<TinyTextObjcet> createTextObject(
+  TinyTextObjcet createTextObject(
     String text, double textureWidth, double textureHeight,
-    { int fontSize: 25,
+    { double fontSize: 25.0,
       bool isBold: false,
       bool isItalic: false,
       String fontFamily: "Century Gothic",
