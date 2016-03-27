@@ -21,3 +21,5 @@ part 'tinygame_flutter/canvas.dart';
 part 'tinygame_flutter/ncanvas.dart';
 part 'tinygame_flutter/game_builder.dart';
 part 'tinygame_flutter/loader.dart';
+//
+part 'tinygame_flutter/textobject.dart';
