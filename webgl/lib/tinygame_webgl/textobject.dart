@@ -6,7 +6,7 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
   int index = 0;
   TExpansionTapCallback callback;
 
-  TinyWebglTextObjcet(text, textureWidth, textureHeight, {fontSize: 25, isBold: false, isItalic: false, fontFamily: "Century Gothic", fillStyle: null, strokeStyle: null, backgroundColor: null}) : super(text, textureWidth, textureHeight, fontSize: fontSize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily, fillStyle: fillStyle, strokeStyle: strokeStyle, backgroundColor: backgroundColor) {
+  TinyWebglTextObjcet(text, textureWidth, textureHeight, {fontSize: 25, isBold: false, isItalic: false, fontFamily: "Century Gothic", fillColor: null, strokeColor: null, backgroundColor: null}) : super(text, textureWidth, textureHeight, fontSize: fontSize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily, fillStyle: fillColor, strokeStyle: strokeColor, backgroundColor: backgroundColor) {
     bodyCanvasElm = new CanvasElement(width: textureWidth.toInt(), height: textureHeight.toInt());
     bodyText = new TinyWebglImage(bodyCanvasElm);
   }

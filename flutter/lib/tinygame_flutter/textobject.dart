@@ -5,12 +5,12 @@ class TinyFlutterTextObject extends TinyTextObjcet {
   TinyFlutterTextObject(
     text, textureWidth, textureHeight,
     {fontSize: 25, isBold: false, isItalic: false,
-     fontFamily: "Century Gothic", fillStyle: null,
-     strokeStyle: null, backgroundColor: null}):
+     fontFamily: "Century Gothic", fillColor: null,
+     strokeColor: null, backgroundColor: null}):
      super(text, textureWidth, textureHeight,
           fontSize: fontSize, isBold: isBold, isItalic: isItalic,
-          fontFamily: fontFamily, fillStyle: fillStyle,
-          strokeStyle: strokeStyle, backgroundColor: backgroundColor) {
+          fontFamily: fontFamily, fillStyle: fillColor,
+          strokeStyle: strokeColor, backgroundColor: backgroundColor) {
   }
 
   Future updateText() async {
