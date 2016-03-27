@@ -11,7 +11,7 @@ class TinyTextObjcet extends TinyDisplayObjectEx {
   double textureWidth;
   TinyColor backgroundColor = null;
   String text;
-  TinyTextObjcet(this.text, this.textureWidth, this.textureHeight, {this.fontSize: 25, this.isBold: false, this.isItalic: false, this.fontFamily: "Century Gothic", this.fillStyle: null, this.strokeStyle: null, this.backgroundColor: null}) {
+  TinyTextObjcet(this.text, this.textureWidth, this.textureHeight, {this.fontSize: 25.0, this.isBold: false, this.isItalic: false, this.fontFamily: "Century Gothic", this.fillStyle: null, this.strokeStyle: null, this.backgroundColor: null}) {
     if (fillStyle == null) {
       fillStyle = TinyColor.black;
     }

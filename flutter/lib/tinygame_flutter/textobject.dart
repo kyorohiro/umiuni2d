@@ -11,6 +11,7 @@ class TinyFlutterTextObject extends TinyTextObjcet {
           fontSize: fontSize, isBold: isBold, isItalic: isItalic,
           fontFamily: fontFamily, fillStyle: fillColor,
           strokeStyle: strokeColor, backgroundColor: backgroundColor) {
+            ;
   }
 
   Future updateText() async {
@@ -25,7 +26,7 @@ class TinyFlutterTextObject extends TinyTextObjcet {
     }
     TinyFlutterCanvas fcanvas = canvas;
     Canvas nativeCanvas = fcanvas.canvas;
-    Color textColor = const Color.fromARGB(0xaa, 0x33, 0x22, 0x22);
+    Color textColor = new Color.fromARGB(fillStyle.a, fillStyle.r, fillStyle.g, fillStyle.b);
     //TextStyle textStyle = new TextStyle(fontSize: 50.0, color: textColor);
     TextStyle textStyle =
     new TextStyle(
@@ -34,13 +35,14 @@ class TinyFlutterTextObject extends TinyTextObjcet {
       fontStyle: (isItalic?FontStyle.italic:FontStyle.normal),
       fontWeight: (isBold?FontWeight.w500:FontWeight.w300),
       color: textColor);
-    TextSpan testStyledSpan = new TextSpan(text: "Hello Text!! こんにちは!!", style: textStyle);
+    TextSpan testStyledSpan = new TextSpan(text: text, style: textStyle);
     TextPainter textPainter = new TextPainter(testStyledSpan);
 
     textPainter.maxWidth = textureWidth; //constraints.maxWidth;
     textPainter.minWidth = textureWidth; //constraints.minWidth;
     textPainter.minHeight = textureHeight;
     textPainter.maxHeight = textureHeight;
+
     textPainter.layout();
     textPainter.paint(nativeCanvas, new sky.Offset(0.0, 0.0));
   }

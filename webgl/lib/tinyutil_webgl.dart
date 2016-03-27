@@ -91,8 +91,11 @@ class CanvasElementText {
     canvasElm.style.height = "${height}px";
 
     html.CanvasRenderingContext2D context =
-    resetCanvasImage(fontSize: fontsize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily,
-      fillStyle: fillColor, strokeStyle: strokeColor, textureHeight: height, textureWidth: width, canvasElm: canvasElm);
+    resetCanvasImage(
+      fontSize: fontsize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily,
+      fillStyle: fillColor, strokeStyle: strokeColor,
+      textureHeight: height, textureWidth: width,
+      canvasElm: canvasElm);
 
     TextLines lines = new TextLines.fromContext2D(context, message, width, fontsize);
     //
