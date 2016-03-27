@@ -32,6 +32,36 @@ enum CanvasElementTextAlign {
 
 class CanvasElementText {
 
+  // http://stackoverflow.com/questions/5680013/how-to-be-notified-once-a-web-font-has-loaded
+  static Future waitForWebFont(List<String> fonts) async {
+    for(String font in fonts) {
+      html.SpanElement span = new html.SpanElement();
+      span.text = "xxx";
+      span.style.position = "absolute";
+      span.style.top = "-10000px";
+      span.style.left = "-10000px";
+      span.style.fontSize = "30px";
+      span.style.fontFamily = "sans-serif";
+      span.style.fontVariant = "normal";
+      span.style.fontStyle = "normal";
+      span.style.fontWeight = "normal";
+      span.style.letterSpacing = "0";
+      html.document.body.append(span);
+      //
+      var width = span.offsetWidth;
+      //
+      span.style.fontFamily = font;
+      for(int j=0;j<10;j++) {
+        if(span != null && span.offsetWidth != width) {
+          print("--------------------------${font}-OK!!");
+          span.parent.children.remove(span);
+          span = null;
+          break;
+        }
+        await new Future.delayed(new Duration(milliseconds: 50));
+      }
+    }
+  }
 
   static html.CanvasRenderingContext2D resetCanvasImage(
     {
