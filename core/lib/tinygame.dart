@@ -27,3 +27,4 @@ part 'tinygame/color.dart';
 part 'tinygame/stage.dart';
 part 'tinygame/sprite.dart';
 part 'tinygame/audio.dart';
+part 'tinygame/textobject.dart';

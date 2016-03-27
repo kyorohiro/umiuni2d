@@ -1,24 +1,16 @@
 part of tinygame_flutter;
 
-class TinyFlutterTextObject extends TinyDisplayObject {
-  int fontSize;
-  bool isBold;
-  bool isItalic;
-  String fontFamily;
-  TinyColor fillStyle;
-  TinyColor strokeStyle;
-  double textureHeight;
-  double textureWidth;
+class TinyFlutterTextObject extends TinyTextObjcet {
 
-  TinyColor backgroundColor = null;
-  String text;
-  TinyFlutterTextObject(this.text, this.textureWidth, this.textureHeight, {this.fontSize: 25, this.isBold: false, this.isItalic: false, this.fontFamily: "Century Gothic", this.fillStyle: null, this.strokeStyle: null, this.backgroundColor: null}) {
-    if (fillStyle == null) {
-      fillStyle = TinyColor.black;
-    }
-    if (strokeStyle == null) {
-      strokeStyle = TinyColor.black;
-    }
+  TinyFlutterTextObject(
+    text, textureWidth, textureHeight,
+    {fontSize: 25, isBold: false, isItalic: false,
+     fontFamily: "Century Gothic", fillStyle: null,
+     strokeStyle: null, backgroundColor: null}):
+     super(text, textureWidth, textureHeight,
+          fontSize: fontSize, isBold: isBold, isItalic: isItalic,
+          fontFamily: fontFamily, fillStyle: fillStyle,
+          strokeStyle: strokeStyle, backgroundColor: backgroundColor) {
   }
 
   Future updateText() async {
@@ -27,6 +19,7 @@ class TinyFlutterTextObject extends TinyDisplayObject {
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     //
+    super.onPaint(stage, canvas);
     if (!(canvas is TinyFlutterCanvas)) {
       return;
     }
