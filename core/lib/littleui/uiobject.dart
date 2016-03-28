@@ -25,7 +25,7 @@ class LittleUIObject extends TinyDisplayObjectEx {
   void onChangeStageStatus(TinyStage stage, TinyDisplayObject parent) {
     double tw = w;
     double th = h;
-    //print("###### ${isFullWidth} ${isFullHeight}");
+//    print("#isFull##### ${isFullWidth} ${isFullHeight}");
     if (isFullWidth) {
       w = ((parent == null || false == parent is LittleUIObject) ? stage.w : (parent as LittleUIObject).w);
     }

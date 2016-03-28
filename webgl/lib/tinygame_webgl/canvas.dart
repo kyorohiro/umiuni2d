@@ -429,6 +429,7 @@ class TinyWebglCanvas extends TinyCanvas {
     double ys = src.y / flImg.h;
     double xe = (src.x + src.w) / flImg.w;
     double ye = (src.y + src.h) / flImg.h;
+    //print("############### ${xs} ${ys} ${xe} ${ye} ##############");
     switch (transform) {
       case TinyCanvasTransform.NONE:
         flTex.addAll([xs, ys, xs, ye, xe, ys, xe, ye]);
@@ -504,7 +505,7 @@ class TinyWebglCanvas extends TinyCanvas {
     cacheMatrix.setIdentity();
     //cacheMatrix =
     cacheMatrix.translate(-1.0, 1.0, 0.0);
-    //cacheMatrix = 
+    //cacheMatrix =
     cacheMatrix.scale(2.0 / glContext.widht, -2.0 / glContext.height, 1.0);
     cacheMatrix = cacheMatrix * getMatrix();
     return cacheMatrix;

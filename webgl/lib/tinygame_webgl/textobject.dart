@@ -7,18 +7,13 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
   TExpansionTapCallback callback;
   double magnufication = 1.50;
 
-
   TinyWebglTextObjcet(text, textureWidth, textureHeight, {fontSize: 25, isBold: false, isItalic: false, fontFamily: "Century Gothic", fillColor: null, strokeColor: null, backgroundColor: null}) : super(text, textureWidth, textureHeight, fontSize: fontSize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily, fillStyle: fillColor, strokeStyle: strokeColor, backgroundColor: backgroundColor) {
     bodyCanvasElm = new CanvasElement(width: textureWidth.toInt(), height: textureHeight.toInt());
     bodyText = new TinyWebglImage(bodyCanvasElm);
   }
 
   Future updateText() async {
-    CanvasElementText.makeImage(text, canvasElm: bodyCanvasElm,
-      width: (textureWidth*magnufication).toInt(), height: (textureHeight*magnufication).toInt(),
-      fontFamily: fontFamily, fontsize: (fontSize*magnufication),
-      isBold: isBold, isItalic: isItalic, fillColor: fillStyle, strokeColor: strokeStyle,
-      align: CanvasElementTextAlign.left_top);
+    CanvasElementText.makeImage(text, canvasElm: bodyCanvasElm, width: (textureWidth * magnufication).toInt(), height: (textureHeight * magnufication).toInt(), fontFamily: fontFamily, fontsize: (fontSize * magnufication), isBold: isBold, isItalic: isItalic, fillColor: fillStyle, strokeColor: strokeStyle, align: CanvasElementTextAlign.left_top);
     await bodyText.update();
     textureWidth = bodyCanvasElm.width.toDouble();
     textureHeight = bodyCanvasElm.height.toDouble();
@@ -26,26 +21,26 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     super.onPaint(stage, canvas);
-    if(stage is TinyWebglStage) {
+    if (stage is TinyWebglStage) {
       double sx = stage.sxFromMat;
-      if(magnufication != sx) {
+      if (magnufication != sx) {
         print(":: ${magnufication} = ${sx}");
         magnufication = sx;
-        updateText().then((_){
+        updateText().then((_) {
           stage.markPaintshot();
         });
       }
-    //  CanvasElement elm = (stage as TinyWebglStage).glContext._canvasElement;
-    //  double t = elm.height / elm.offsetHeight;
+      //  CanvasElement elm = (stage as TinyWebglStage).glContext._canvasElement;
+      //  double t = elm.height / elm.offsetHeight;
     }
+
     canvas.drawImageRect(stage, bodyText,
-//      new TinyRect(0.0, 0.0, textureWidth*magnufication, textureHeight*magnufication),
-//       new TinyRect(0.0, 0.0, textureWidth, textureHeight),
       new TinyRect(0.0, 0.0, bodyCanvasElm.width.toDouble(), bodyCanvasElm.height.toDouble()),
-      new TinyRect(0.0, 0.0, bodyCanvasElm.width.toDouble(), bodyCanvasElm.height.toDouble()),
+      new TinyRect(0.0, 0.0, bodyCanvasElm.width.toDouble(), bodyCanvasElm.height.toDouble()), 
       new TinyPaint(), transform: TinyCanvasTransform.MIRROR_ROT180);
-      textureWidth = bodyCanvasElm.width.toDouble();
-      textureHeight = bodyCanvasElm.height.toDouble();
-      print("##>>> # ${bodyCanvasElm.height.toDouble()} ${textureHeight}");
+    textureWidth = bodyCanvasElm.width.toDouble();
+    textureHeight = bodyCanvasElm.height.toDouble();
+  //  print("##>>> # ${bodyCanvasElm.height.toDouble()} ${textureHeight}");
+
   }
 }
