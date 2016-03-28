@@ -7,6 +7,7 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
   TExpansionTapCallback callback;
   double magnufication = 1.50;
 
+
   TinyWebglTextObjcet(text, textureWidth, textureHeight, {fontSize: 25, isBold: false, isItalic: false, fontFamily: "Century Gothic", fillColor: null, strokeColor: null, backgroundColor: null}) : super(text, textureWidth, textureHeight, fontSize: fontSize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily, fillStyle: fillColor, strokeStyle: strokeColor, backgroundColor: backgroundColor) {
     bodyCanvasElm = new CanvasElement(width: textureWidth.toInt(), height: textureHeight.toInt());
     bodyText = new TinyWebglImage(bodyCanvasElm);
@@ -18,7 +19,9 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
       fontFamily: fontFamily, fontsize: (fontSize*magnufication),
       isBold: isBold, isItalic: isItalic, fillColor: fillStyle, strokeColor: strokeStyle,
       align: CanvasElementTextAlign.left_top);
-    bodyText.update();
+    await bodyText.update();
+    textureWidth = bodyCanvasElm.width.toDouble();
+    textureHeight = bodyCanvasElm.height.toDouble();
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
@@ -36,8 +39,13 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
     //  double t = elm.height / elm.offsetHeight;
     }
     canvas.drawImageRect(stage, bodyText,
-       new TinyRect(0.0, 0.0, textureWidth*magnufication, textureHeight*magnufication),
-       new TinyRect(0.0, 0.0, textureWidth, textureHeight),
-       new TinyPaint(), transform: TinyCanvasTransform.MIRROR_ROT180);
+//      new TinyRect(0.0, 0.0, textureWidth*magnufication, textureHeight*magnufication),
+//       new TinyRect(0.0, 0.0, textureWidth, textureHeight),
+      new TinyRect(0.0, 0.0, bodyCanvasElm.width.toDouble(), bodyCanvasElm.height.toDouble()),
+      new TinyRect(0.0, 0.0, bodyCanvasElm.width.toDouble(), bodyCanvasElm.height.toDouble()),
+      new TinyPaint(), transform: TinyCanvasTransform.MIRROR_ROT180);
+      textureWidth = bodyCanvasElm.width.toDouble();
+      textureHeight = bodyCanvasElm.height.toDouble();
+      print("##>>> # ${bodyCanvasElm.height.toDouble()} ${textureHeight}");
   }
 }
