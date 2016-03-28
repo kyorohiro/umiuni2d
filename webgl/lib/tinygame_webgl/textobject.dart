@@ -18,7 +18,6 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
       fontFamily: fontFamily, fontsize: (fontSize*magnufication),
       isBold: isBold, isItalic: isItalic, fillColor: fillStyle, strokeColor: strokeStyle, align: CanvasElementTextAlign.left_top);
     bodyText.update();
-
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
