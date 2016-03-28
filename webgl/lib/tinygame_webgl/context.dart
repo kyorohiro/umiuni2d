@@ -18,7 +18,7 @@ class TinyWebglContext {
     } else {
       _canvasElement = window.document.querySelector(selectors);
       if (width != null) {
-        _canvasElement.width = width;
+        _canvasElement.width = _canvasElement.offsetWidth;
       } else {
         this.widht = _canvasElement.offsetWidth.toDouble();
       }

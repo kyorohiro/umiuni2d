@@ -77,12 +77,7 @@ class CanvasElementText {
     if (canvasElm == null) {
       canvasElm = new html.CanvasElement();
     }
-    if(fillStyle == null) {
-      fillStyle = TinyColor.black;
-    }
-    if(strokeStyle == null) {
-      strokeStyle = TinyColor.black;
-    }
+
     canvasElm.style.width = "${textureWidth}px";
     canvasElm.style.height = "${textureHeight}px";
     //
@@ -92,10 +87,14 @@ class CanvasElementText {
     String fontStyle = (isItalic?"italic ":"") + (isBold?"bold ":"");
 
     context.font = "${fontStyle}${fontSize}px ${fontFamily}";
-    context.strokeStyle = fillStyle.toRGBAString();
-    context.fillStyle = strokeStyle.toRGBAString();
-    context.lineCap = "round";
-    context.lineJoin = "round";
+    if(strokeStyle != null) {
+      context.strokeStyle = strokeStyle.toRGBAString();
+    }
+    if(fillStyle != null) {
+      context.fillStyle = fillStyle.toRGBAString();
+    }
+    //context.lineCap = "round";
+    //context.lineJoin = "round";
     return context;
   }
 

@@ -7,6 +7,10 @@ class TinyDisplayObject {
   double get x => this.mat.storage[12];
   double get y => this.mat.storage[13];
   double get z => this.mat.storage[14];
+  double get sx => (new Vector3(mat.storage[0], mat.storage[4], mat.storage[8])).length;
+  double get sy => (new Vector3(mat.storage[1], mat.storage[5], mat.storage[9])).length;
+  double get sz => (new Vector3(mat.storage[2], mat.storage[6], mat.storage[10])).length;
+
 
   TinyDisplayObject({this.child: null}) {
     if (child == null) {

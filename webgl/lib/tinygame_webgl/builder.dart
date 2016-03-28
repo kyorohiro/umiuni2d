@@ -36,11 +36,14 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
         c.completeError(e);
       }
     });
+
     request.onError.listen((ProgressEvent e) {
       print("--C--");
       c.completeError(e);
     });
+
     request.send();
+
     print("--D--");
     return c.future;
   }

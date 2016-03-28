@@ -5,7 +5,7 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
   CanvasElement bodyCanvasElm;
   int index = 0;
   TExpansionTapCallback callback;
-  double magnufication = 1.5;
+  double magnufication = 1.00;
 
   TinyWebglTextObjcet(text, textureWidth, textureHeight, {fontSize: 25, isBold: false, isItalic: false, fontFamily: "Century Gothic", fillColor: null, strokeColor: null, backgroundColor: null}) : super(text, textureWidth, textureHeight, fontSize: fontSize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily, fillStyle: fillColor, strokeStyle: strokeColor, backgroundColor: backgroundColor) {
     bodyCanvasElm = new CanvasElement(width: textureWidth.toInt(), height: textureHeight.toInt());
@@ -22,6 +22,10 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     super.onPaint(stage, canvas);
+    if(stage is TinyWebglStage) {
+    //  CanvasElement elm = (stage as TinyWebglStage).glContext._canvasElement;
+    //  double t = elm.height / elm.offsetHeight;
+    }
     canvas.drawImageRect(stage, bodyText,
        new TinyRect(0.0, 0.0, textureWidth*magnufication, textureHeight*magnufication),
        new TinyRect(0.0, 0.0, textureWidth, textureHeight),

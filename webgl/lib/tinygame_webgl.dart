@@ -19,6 +19,6 @@ part 'tinygame_webgl/audio.dart';
 part 'tinygame_webgl/image.dart';
 part 'tinygame_webgl/canvas.dart';
 part 'tinygame_webgl/context.dart';
-part 'tinygame_webgl/gamebuilder.dart';
+part 'tinygame_webgl/builder.dart';
 //
 part 'tinygame_webgl/textobject.dart';
