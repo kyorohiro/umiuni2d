@@ -16,7 +16,8 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
     CanvasElementText.makeImage(text, canvasElm: bodyCanvasElm,
       width: (textureWidth*magnufication).toInt(), height: (textureHeight*magnufication).toInt(),
       fontFamily: fontFamily, fontsize: (fontSize*magnufication),
-      isBold: isBold, isItalic: isItalic, fillColor: fillStyle, strokeColor: strokeStyle, align: CanvasElementTextAlign.left_top);
+      isBold: isBold, isItalic: isItalic, fillColor: fillStyle, strokeColor: strokeStyle,
+      align: CanvasElementTextAlign.left_top);
     bodyText.update();
   }
 
