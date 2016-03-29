@@ -126,18 +126,20 @@ class LittleUIScroller extends LittleUIObject {
         isResetSpeed = true;
       }
     }
+    if (isResetSpeed) {
+      speedY = 0.0;
+    }
     //
     double r = (info.right > this.body.w?info.right:this.body.w);
-    if (this.body.x < info.left) {
+    if (-1*this.body.x < info.left) {
       body.mat.translate((info.left-this.body.x)*springOrientation, 0.0, 0.0);
       isResetSpeed = true;
-    } else if((this.body.x+this.body.w) > r) {
-      body.mat.translate(-1 * ((this.body.x+this.body.w)- r)*springOrientation, 0.0, 0.0);
+    } else if((-1*this.body.x+this.body.w) > r) {
+      body.mat.translate(1 * ((-1*this.body.x+this.body.w)- r)*springOrientation, 0.0, 0.0);
       isResetSpeed = true;
     }
     if (isResetSpeed) {
       speedX = 0.0;
-      speedY = 0.0;
     }
     return isResetSpeed;
   }
@@ -225,12 +227,18 @@ class LittleUIScroller extends LittleUIObject {
           //
           //
           {
-            if (this.body.x < info.left || (this.body.x+this.body.w) > info.right) {
+            if ((-1*this.body.x) < info.left) {
+              body.mat.translate(-1 * (i.prevX - globalX)*(1.0-springOrientation), 0.0, 0.0);
+            }
+            else if ( (-1*this.body.x+this.body.w) > info.right) {
               body.mat.translate(-1 * (i.prevX - globalX)*(1.0-springOrientation), 0.0, 0.0);
             }
             else {
               body.mat.translate(-1 * (i.prevX - globalX), 0.0, 0.0);
             }
+            print("##># ${this.body.x} < ${info.left}");
+            print("##># ${this.body.x} + ${this.body.w} > ${info.right}");
+
             info.updateInRange(
               this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
           }
