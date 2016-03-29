@@ -22,16 +22,13 @@ class LittleUIScroller extends LittleUIObject {
   int head = 0;
   int tail = 0;
   double spring = 0.1;
-  double springOrientation = 0.1;
+  double springOrientation = 0.01;
   double braking = 0.95;
   LittleUIObject body;
   LittleUIObject topLayer;
-  LittleUIScroller(this.builder, this.info,
-    {
-      double width: 100.0, double height: 100.0,
-      isFullWidth: true, isFullHeight: true,
-      springOrientation:0.5
-    }) : super(width, height, isFullWidth: isFullWidth, isFullHeight: isFullHeight) {
+  LittleUIScroller(this.builder, this.info, {
+    double width: 100.0, double height: 100.0, isFullWidth: true, isFullHeight: true,
+    this.springOrientation: 0.9}) : super(width, height, isFullWidth: isFullWidth, isFullHeight: isFullHeight) {
     body = new LittleUIObject(w, h, isFullWidth: true, isFullHeight: true);
     topLayer = new LittleUIObject(w, h, isFullWidth: true, isFullHeight: true);
     body.backgroundColor = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
@@ -74,12 +71,11 @@ class LittleUIScroller extends LittleUIObject {
   double speedX = 0.0;
 
   bool brake(int curr, int prev) {
-
     double late = 1.0;
-    if(prev != 0 && curr !=prev) {
-      late = (curr-prev)/10;
+    if (prev != 0 && curr != prev) {
+      late = (curr - prev) / 10;
     }
-    if(late > 3.0) {
+    if (late > 3.0) {
       late = 1.0;
     }
     bool needUpdata = false;
@@ -107,19 +103,18 @@ class LittleUIScroller extends LittleUIObject {
   }
 
   bool bounce(int curr, int prev) {
-
     double late = 1.0;
-    if(prev != 0 && curr !=prev) {
-      late = (curr-prev)/10;
+    if (prev != 0 && curr != prev) {
+      late = (curr - prev) / 10;
     }
-    if(late > 3.0) {
+    if (late > 3.0) {
       late = 1.0;
     }
-      //  print("##bounced ${info.top} ${info.bottom} ${body.y} ${body.h} ${curr} ${prev} ${late} ${(curr-prev)}");
-    bool needUpdata = false;
+    //  print("##bounced ${info.top} ${info.bottom} ${body.y} ${body.h} ${curr} ${prev} ${late} ${(curr-prev)}");
+    bool isResetSpeed = false;
     if (this.body.y > info.top + 1) {
-      body.mat.translate(0.0, -1 * (this.body.y - info.top) * spring* late, 0.0);
-      needUpdata = true;
+      body.mat.translate(0.0, -1 * (this.body.y - info.top) * spring * late, 0.0);
+      isResetSpeed = true;
     } else {
       double d = info.bottom;
       if (this.body.h > (info.bottom - info.top)) {
@@ -127,31 +122,24 @@ class LittleUIScroller extends LittleUIObject {
       }
       //
       if ((-1 * this.body.y + this.body.h) > d + 1) {
-        body.mat.translate(0.0, -1 * (d - (-1 * this.body.y + this.body.h)) * spring*late, 0.0);
-        needUpdata = true;
+        body.mat.translate(0.0, -1 * (d - (-1 * this.body.y + this.body.h)) * spring * late, 0.0);
+        isResetSpeed = true;
       }
     }
     //
-    if (this.body.x > info.left + 1) {
-      body.mat.translate(-1 * (this.body.x - info.left) * springOrientation, 0.0, 0.0);
-      needUpdata = true;
-    } else {
-      double d = info.right;
-      if (this.body.w > (info.right - info.left)) {
-        d = body.w;
-      }
-      //
-      if ((-1 * this.body.x + this.body.w) > d + 1) {
-//        print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
-        body.mat.translate(-1 * (d - (-1 * this.body.x + this.body.w)) * springOrientation, 0.0, 0.0);
-        needUpdata = true;
-      }
+    double r = (info.right > this.body.w?info.right:this.body.w);
+    if (this.body.x < info.left) {
+      body.mat.translate((info.left-this.body.x)*springOrientation, 0.0, 0.0);
+      isResetSpeed = true;
+    } else if((this.body.x+this.body.w) > r) {
+      body.mat.translate(-1 * ((this.body.x+this.body.w)- r)*springOrientation, 0.0, 0.0);
+      isResetSpeed = true;
     }
-    if(needUpdata){
+    if (isResetSpeed) {
       speedX = 0.0;
       speedY = 0.0;
     }
-    return needUpdata;
+    return isResetSpeed;
   }
 
   int prevTime = 0;
@@ -163,7 +151,7 @@ class LittleUIScroller extends LittleUIObject {
     }
 
     //
-    if(prevTime == 0) {
+    if (prevTime == 0) {
       prevTime = timeStamp;
     }
     needUpdata = needUpdata || bounce(timeStamp, prevTime);
@@ -182,10 +170,8 @@ class LittleUIScroller extends LittleUIObject {
   }
 
   redesign() {
-    for(int i=0;i<3;i++){
-    info.updateInRange(
-      this.body, this.topLayer,
-      this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
+    for (int i = 0; i < 3; i++) {
+      info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
     }
   }
 
@@ -214,50 +200,51 @@ class LittleUIScroller extends LittleUIObject {
           if (false == inRange(stage, globalX, globalY)) {
             i.isPush = false;
             stage.markPaintshot();
-          } else {
-            //
-            //
-            //if (!(-1 * this.body.y + this.body.h*1 > info.bottom && (i.prevY - globalY) > 0)) {
-            if (this.body.y > info.top && (i.prevY - globalY) < 0) {
-              body.mat.translate(0.0, -1 * (i.prevY - globalY) / 3, 0.0);
-            } else if (-1 * this.body.y + this.body.h * 1 > info.bottom) {
-              body.mat.translate(0.0, -1 * (i.prevY - globalY) / 3, 0.0);
-            } else {
-              //  print("---------${i.prevY} - ${globalY}");
-              body.mat.translate(0.0, -1 * (i.prevY - globalY), 0.0);
-              info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
-            }
-            //}
-            //
-            if (speedY == 999.0) {
-              speedY = i.prevY - globalY;
-            } else {
-              speedY = (i.prevY - globalY) - speedY;
-            }
-
-            //
-            //
-            if (!(-1 * this.body.x + this.body.w / 2 > info.right && (i.prevX - globalX) > 0)) {
-              if (!(this.body.x > info.left && (i.prevX - globalX) < 0)) {
-                //print("---------${i.prevX} - ${globalX}");
-                body.mat.translate(-1 * (i.prevX - globalX), 0.0, 0.0);
-                info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
-              } else {
-                //body.mat.translate(-1 * (i.prevX - globalX) / 3, 0.0, 0.0);
-              }
-            }
-            //
-            //
-            if (speedX == 999.0) {
-              speedX = i.prevX - globalX;
-            } else {
-              speedX = (i.prevX - globalX) - speedX;
-            }
-
-            stage.markPaintshot();
-            i.prevY = globalY;
-            i.prevX = globalX;
+            return false;
           }
+          //
+          //
+          //if (!(-1 * this.body.y + this.body.h*1 > info.bottom && (i.prevY - globalY) > 0)) {
+          if (this.body.y > info.top && (i.prevY - globalY) < 0) {
+            body.mat.translate(0.0, -1 * (i.prevY - globalY) / 3, 0.0);
+          } else if (-1 * this.body.y + this.body.h * 1 > info.bottom) {
+            body.mat.translate(0.0, -1 * (i.prevY - globalY) / 3, 0.0);
+          } else {
+            //  print("---------${i.prevY} - ${globalY}");
+            body.mat.translate(0.0, -1 * (i.prevY - globalY), 0.0);
+            info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
+          }
+          //}
+          //
+          if (speedY == 999.0) {
+            speedY = i.prevY - globalY;
+          } else {
+            speedY = (i.prevY - globalY) - speedY;
+          }
+
+          //
+          //
+          {
+            if (this.body.x < info.left || (this.body.x+this.body.w) > info.right) {
+              body.mat.translate(-1 * (i.prevX - globalX)*(1.0-springOrientation), 0.0, 0.0);
+            }
+            else {
+              body.mat.translate(-1 * (i.prevX - globalX), 0.0, 0.0);
+            }
+            info.updateInRange(
+              this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
+          }
+          //
+          //
+          if (speedX == 999.0) {
+            speedX = i.prevX - globalX;
+          } else {
+            speedX = (i.prevX - globalX) - speedX;
+          }
+
+          stage.markPaintshot();
+          i.prevY = globalY;
+          i.prevX = globalX;
         }
         break;
       case TinyStagePointerType.CANCEL:
