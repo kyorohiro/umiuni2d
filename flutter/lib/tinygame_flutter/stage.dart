@@ -60,14 +60,12 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   }
 
   void markPaintshot() {
-    //
-//        print("-tick----${animeIsStart}");
     if (animeIsStart != true) {
-//      this.markNeedsPaint();
-//      kickPaintTick();
-      _innerTickWithOwn();
-//      int a2 = new DateTime.now().millisecondsSinceEpoch;
-//_      _innerTick(new Duration(milliseconds: new DateTime.now().millisecondsSinceEpoch));
+      this.markNeedsPaint();
+      kickPaintTick();
+//      _innerTickWithOwn();
+      int a2 = new DateTime.now().millisecondsSinceEpoch;
+      _innerTick(new Duration(milliseconds: new DateTime.now().millisecondsSinceEpoch));
 
     }
   }
