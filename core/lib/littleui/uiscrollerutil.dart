@@ -5,6 +5,11 @@ class LittleUIScrollerInfoSize {
   List<double> sizePerItem = [];
   List<double> totalSizePerItem = [];
 
+  void clear() {
+      sizePerItem.clear();
+      totalSizePerItem.clear();
+  }
+
   double getSizePerItem(int id) {
     return sizePerItem[id];
   }

@@ -22,10 +22,16 @@ class LittleUIScroller extends LittleUIObject {
   int head = 0;
   int tail = 0;
   double spring = 0.1;
-  double braking = 0.97;
+  double springOrientation = 0.1;
+  double braking = 0.95;
   LittleUIObject body;
   LittleUIObject topLayer;
-  LittleUIScroller(this.builder, this.info, {double width: 100.0, double height: 100.0, isFullWidth: true, isFullHeight: true}) : super(width, height, isFullWidth: isFullWidth, isFullHeight: isFullHeight) {
+  LittleUIScroller(this.builder, this.info,
+    {
+      double width: 100.0, double height: 100.0,
+      isFullWidth: true, isFullHeight: true,
+      springOrientation:0.5
+    }) : super(width, height, isFullWidth: isFullWidth, isFullHeight: isFullHeight) {
     body = new LittleUIObject(w, h, isFullWidth: true, isFullHeight: true);
     topLayer = new LittleUIObject(w, h, isFullWidth: true, isFullHeight: true);
     body.backgroundColor = new TinyColor.argb(0x00, 0xff, 0xff, 0xff);
@@ -127,7 +133,7 @@ class LittleUIScroller extends LittleUIObject {
     }
     //
     if (this.body.x > info.left + 1) {
-      body.mat.translate(-1 * (this.body.x - info.left) * spring, 0.0, 0.0);
+      body.mat.translate(-1 * (this.body.x - info.left) * springOrientation, 0.0, 0.0);
       needUpdata = true;
     } else {
       double d = info.right;
@@ -137,7 +143,7 @@ class LittleUIScroller extends LittleUIObject {
       //
       if ((-1 * this.body.x + this.body.w) > d + 1) {
 //        print("##d#s${d} ${info.top} ${info.bottom} ${body.y} ${body.h}");
-        body.mat.translate(-1 * (d - (-1 * this.body.x + this.body.w)) * spring, 0.0, 0.0);
+        body.mat.translate(-1 * (d - (-1 * this.body.x + this.body.w)) * springOrientation, 0.0, 0.0);
         needUpdata = true;
       }
     }
@@ -172,6 +178,14 @@ class LittleUIScroller extends LittleUIObject {
         //print("#++#${speedY} ${infos.length}");
         stage.markPaintshot();
       });
+    }
+  }
+
+  redesign() {
+    for(int i=0;i<3;i++){
+    info.updateInRange(
+      this.body, this.topLayer,
+      this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
     }
   }
 
@@ -223,13 +237,13 @@ class LittleUIScroller extends LittleUIObject {
 
             //
             //
-            if (!(-1 * this.body.x + this.body.w / 2 > info.bottom && (i.prevX - globalX) > 0)) {
+            if (!(-1 * this.body.x + this.body.w / 2 > info.right && (i.prevX - globalX) > 0)) {
               if (!(this.body.x > info.left && (i.prevX - globalX) < 0)) {
                 //print("---------${i.prevX} - ${globalX}");
                 body.mat.translate(-1 * (i.prevX - globalX), 0.0, 0.0);
                 info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
               } else {
-                body.mat.translate(-1 * (i.prevX - globalX) / 3, 0.0, 0.0);
+                //body.mat.translate(-1 * (i.prevX - globalX) / 3, 0.0, 0.0);
               }
             }
             //
