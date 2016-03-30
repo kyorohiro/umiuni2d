@@ -7,8 +7,12 @@ class TinyFlutterImage implements TinyImage {
   TinyFlutterImage(this.rawImage) {
     ;
   }
+  @override
   int get w => rawImage.image.width;
+
+  @override
   int get h => rawImage.image.height;
+
   @override
   void dispose() {;}
 }

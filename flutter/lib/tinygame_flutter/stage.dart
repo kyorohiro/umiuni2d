@@ -1,44 +1,76 @@
 part of tinygame_flutter;
 
-class TinyFlutterStage extends RenderBox with TinyStage {
+class TinyFlutterStage extends RenderConstrainedBox implements TinyStage {
+  TinyStageBase stageBase;
+  TinyFlutterStage(this._builder, TinyDisplayObject root,
+    { this.tickInPerFrame: true, this.useTestCanvas: false,
+      this.useDrawVertexForPrimtive: false, this.tickInterval: 15}
+    ) : super(additionalConstraints: const BoxConstraints.expand())
+      {
+    stageBase = new TinyStageBase(this);
+    this.root = root;
+    this.canvas = null;
+    init();
+  }
+
+  @override
   double get x => paintBounds.left;
+
+  @override
   double get y => paintBounds.top;
+
+  @override
   double get w => paintBounds.width;
+
+  @override
   double get h => paintBounds.height;
 
+  @override
   double get paddingTop => sky.window.padding.top;
+
+  @override
   double get paddingBottom => sky.window.padding.bottom;
+
+  @override
   double get paddingRight => sky.window.padding.right;
+
+  @override
   double get paddingLeft => sky.window.padding.left;
 
+  @override
   bool animeIsStart = false;
+
+  @override
   int animeId = 0;
 
+  @override
   bool startable = false;
+
+  @override
+  bool isInit = false;
+
   static const int kMaxOfTouch = 5;
   Map<int, TouchPoint> touchPoints = {};
 
   TinyGameBuilder _builder;
+
+  @override
   TinyGameBuilder get builder => _builder;
   TinyCanvas canvas;
   bool useTestCanvas = false; // use drawVertex
   bool tickInPerFrame;
   bool useDrawVertexForPrimtive;
   int tickInterval;
-  TinyFlutterStage(this._builder, TinyDisplayObject root, {this.tickInPerFrame: true, this.useTestCanvas: false, this.useDrawVertexForPrimtive: false, this.tickInterval: 15}) {
-    this.root = root;
-    this.canvas = null;
-    init();
-  }
+
 
   void init() {}
 
-//
-// TODO
+  @override
   void updateSize(double w, double h) {
     root.changeStageStatus(this, null);
   }
 
+  @override
   void start() {
     print("##useTestCanvas ${useTestCanvas}");
     if (animeIsStart == true) {
@@ -72,6 +104,8 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   }
   */
  int onshot = 0;
+
+ @override
  void markPaintshot() {
    if(animeIsStart == true ) {
     return;
@@ -152,6 +186,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     }
   }
 
+  @override
   void stop() {
     if (animeIsStart == true) {
       Scheduler.instance.cancelFrameCallbackWithId(animeId);
@@ -164,15 +199,18 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     size = constraints.biggest;
     startable = true;
   }
-
+/*
   @override
   bool hitTest(HitTestResult result, {Point position}) {
     result.add(new BoxHitTestEntry(this, position));
     return true;
   }
-
+*/
+@override
+bool hitTestSelf(Point position) => true;
   @override
   void paint(PaintingContext context, Offset offset) {
+    super.paint(context, offset);
     if (this.canvas == null) {
       if (this.useTestCanvas == true) {
         this.canvas = new TinyFlutterCanvas(context.canvas);
@@ -180,14 +218,17 @@ class TinyFlutterStage extends RenderBox with TinyStage {
         this.canvas = new TinyFlutterNCanvas(context.canvas, useDrawVertexForPrimtive: useDrawVertexForPrimtive);
       }
     }
+
     if (this.useTestCanvas == true) {
       (this.canvas as TinyFlutterCanvas).canvas = context.canvas;
     } else {
       (this.canvas as TinyFlutterNCanvas).canvas = context.canvas;
     }
+    //context.canvas.save();
     this.canvas.clear();
     kickPaint(this, this.canvas);
     this.canvas.flush();
+
   }
 
   TinyStagePointerType toEvent(PointerEvent e) {
@@ -237,6 +278,74 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     if (event is PointerCancelEvent) {
       touchPoints.clear();
     }
+  }
+
+  //
+  //
+  //
+  //
+  @override
+  TinyDisplayObject get root => stageBase.root;
+
+  @override
+  void set root(TinyDisplayObject v) {
+    stageBase.root = v;
+  }
+
+  @override
+  void kick(int timeStamp) {
+    stageBase.kick(timeStamp);
+  }
+
+  @override
+  void kickPaint(TinyStage stage, TinyCanvas canvas) {
+    stageBase.kickPaint(stage, canvas);
+  }
+
+  @override
+  void kickTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
+    stageBase.kickTouch(stage, id, type, x, y);
+  }
+
+  @override
+  List<Matrix4> get mats => stageBase.mats;
+
+  @override
+  pushMulMatrix(Matrix4 mat) {
+    return stageBase.pushMulMatrix(mat);
+  }
+
+  @override
+  popMatrix() {
+    return stageBase.popMatrix();
+  }
+
+  @override
+  Matrix4 getMatrix() {
+    return stageBase.getMatrix();
+  }
+
+  @override
+  double get xFromMat => stageBase.xFromMat;
+
+  @override
+  double get yFromMat => stageBase.yFromMat;
+
+  @override
+  double get zFromMat => stageBase.zFromMat;
+
+  @override
+  double get sxFromMat => stageBase.sxFromMat;
+
+  @override
+  double get syFromMat => stageBase.syFromMat;
+
+  @override
+  double get szFromMat => stageBase.szFromMat;
+
+  @override
+  Vector3 getCurrentPositionOnDisplayObject(double globalX, double globalY) {
+    return stageBase.getCurrentPositionOnDisplayObject(globalX, globalY);
   }
 }
 

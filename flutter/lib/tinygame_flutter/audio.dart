@@ -16,8 +16,11 @@ class TinyFlutterAudioSource extends TinyAudioSource {
   }
 
   bool get isPlayerOpen => player != null && player.impl.isOpen;
+
+  @override
   Future prepare() async {}
 
+  @override
   Future start({double volume:1.0, bool looping:false}) async {
     //print("-start");
     //await pause();
@@ -33,6 +36,7 @@ class TinyFlutterAudioSource extends TinyAudioSource {
     //print("/start");
   }
 
+  @override
   Future pause() async {
     //print("-pause");
     if (isPlayerOpen) {

@@ -1,6 +1,11 @@
 part of tinygame_flutter;
 
 class TinyFlutterNCanvas extends TinyCanvas {
+
+  TinyFlutterNCanvas(this.canvas, {this.useDrawVertexForPrimtive: false}) {
+    numOfCircleElm = 12;
+  }
+
   Canvas canvas;
 
   List<Point> _vertices = [];
@@ -11,9 +16,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
   int _numOfCircleElm;
   int get numOfCircleElm => _numOfCircleElm;
   bool useDrawVertexForPrimtive;
-  TinyFlutterNCanvas(this.canvas, {this.useDrawVertexForPrimtive: false}) {
-    numOfCircleElm = 12;
-  }
+
   List<double> circleCash = [];
   void set numOfCircleElm(int v) {
     if (circleCash.length == 0 || _numOfCircleElm != v) {
@@ -26,6 +29,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     }
   }
 
+  @override
   void drawOval(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object> cache: null}) {
     if (_curImage != null) {
       flush();
@@ -150,6 +154,8 @@ class TinyFlutterNCanvas extends TinyCanvas {
   Vector3 v2 = new Vector3(0.0, 0.0, 0.0);
   Vector3 v3 = new Vector3(0.0, 0.0, 0.0);
   Vector3 v4 = new Vector3(0.0, 0.0, 0.0);
+
+  @override
   void drawLine(TinyStage stage, TinyPoint p1, TinyPoint p2, TinyPaint paint, {List<Object> cache: null}) {
     if (_curImage != null) {
       flush();
@@ -186,6 +192,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     _indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
   }
 
+  @override
   void drawRect(TinyStage stage, TinyRect rect, TinyPaint paint, {List<Object> cache: null}) {
     if (_curImage != null) {
       flush();
@@ -270,12 +277,14 @@ class TinyFlutterNCanvas extends TinyCanvas {
     _indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 0, bi + 2, bi + 3]);
   }
 
+  @override
   void clearClip(TinyStage stage, {List<Object> cache: null}) {
     flush();
     canvas.restore();
     canvas.save();
   }
 
+  @override
   void clipRect(TinyStage stage, TinyRect rect, {Matrix4 m:null}) {
     flush();
     if(m == null) {
@@ -298,6 +307,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     canvas.clipPath(path);
   }
 
+  @override
   clear() {
     canvas.save();
   }
@@ -398,6 +408,7 @@ class TinyFlutterNCanvas extends TinyCanvas {
     _indicies.addAll([bi + 0, bi + 1, bi + 2, bi + 2, bi + 1, bi + 3]);
   }
 
+  @override
   void updateMatrix() {
     //canvas.setMatrix(this.getMatrix().storage);
   }

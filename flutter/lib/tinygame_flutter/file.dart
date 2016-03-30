@@ -6,12 +6,13 @@ class TinyFlutterFile extends TinyFile {
     ;
   }
 
-  init() async {
+  Future<Object> init() async {
     if(await f.exists() == false) {
       await f.create(recursive: true);
     }
   }
 
+  @override
   Future<int> write(List<int> buffer, int offset) async {
     await init();
     RandomAccessFile af = await f.open(mode: FileMode.WRITE);
@@ -21,6 +22,7 @@ class TinyFlutterFile extends TinyFile {
     return buffer.length;
   }
 
+  @override
   Future<List<int>> read(int offset, int length) async {
     await init();
     RandomAccessFile af = await f.open();
@@ -30,11 +32,13 @@ class TinyFlutterFile extends TinyFile {
     return ret;
   }
 
+  @override
   Future<int> getLength() async {
     await init();
     return f.length();
   }
 
+  @override
   Future<int> truncate(int fileSize) async {
     await init();
     int s = await getLength();

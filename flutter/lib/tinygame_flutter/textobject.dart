@@ -14,10 +14,11 @@ class TinyFlutterTextObject extends TinyTextObjcet {
             ;
   }
 
+  @override
   Future updateText() async {
   }
 
-
+  @override
   void onPaint(TinyStage stage, TinyCanvas canvas) {
     //
     super.onPaint(stage, canvas);

@@ -24,7 +24,9 @@ class TinyWebglStage extends Object with TinyStage {
   int countKickMv = 0;
   num prevTime = 0;
 
+  TinyStageBase stageBase;
   TinyWebglStage(this._builder, TinyDisplayObject root, {width: 600.0, height: 400.0, String selectors: null, this.tickInterval: 15, this.paintInterval: 40}) {
+    stageBase = new TinyStageBase(this);
     glContext = new TinyWebglContext(width: width, height: height, selectors: selectors);
     this.root = root;
     mouseTest();
@@ -250,5 +252,75 @@ class TinyWebglStage extends Object with TinyStage {
         }
       }
     });
+  }
+
+
+
+  //
+  //
+  //
+  //
+  @override
+  TinyDisplayObject get root => stageBase.root;
+
+  @override
+  void set root(TinyDisplayObject v) {
+    stageBase.root = v;
+  }
+
+  @override
+  void kick(int timeStamp) {
+    stageBase.kick(timeStamp);
+  }
+
+  @override
+  void kickPaint(TinyStage stage, TinyCanvas canvas) {
+    stageBase.kickPaint(stage, canvas);
+  }
+
+  @override
+  void kickTouch(TinyStage stage, int id, TinyStagePointerType type, double x, double y) {
+    stageBase.kickTouch(stage, id, type, x, y);
+  }
+
+  @override
+  List<Matrix4> get mats => stageBase.mats;
+
+  @override
+  pushMulMatrix(Matrix4 mat) {
+    return stageBase.pushMulMatrix(mat);
+  }
+
+  @override
+  popMatrix() {
+    return stageBase.popMatrix();
+  }
+
+  @override
+  Matrix4 getMatrix() {
+    return stageBase.getMatrix();
+  }
+
+  @override
+  double get xFromMat => stageBase.xFromMat;
+
+  @override
+  double get yFromMat => stageBase.yFromMat;
+
+  @override
+  double get zFromMat => stageBase.zFromMat;
+
+  @override
+  double get sxFromMat => stageBase.sxFromMat;
+
+  @override
+  double get syFromMat => stageBase.syFromMat;
+
+  @override
+  double get szFromMat => stageBase.szFromMat;
+
+  @override
+  Vector3 getCurrentPositionOnDisplayObject(double globalX, double globalY) {
+    return stageBase.getCurrentPositionOnDisplayObject(globalX, globalY);
   }
 }

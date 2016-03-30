@@ -14,6 +14,7 @@ abstract class TinyCanvas {
   List<Matrix4> mats = [new Matrix4.identity()];
   List<TinyRect> stockClipRect = [];
   List<Matrix4> stockClipMat = [];
+
   clear() {
     ;
   }
