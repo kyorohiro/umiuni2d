@@ -236,8 +236,8 @@ class LittleUIScroller extends LittleUIObject {
             else {
               body.mat.translate(-1 * (i.prevX - globalX), 0.0, 0.0);
             }
-            print("##># ${this.body.x} < ${info.left}");
-            print("##># ${this.body.x} + ${this.body.w} > ${info.right}");
+            //print("##># ${this.body.x} < ${info.left}");
+            //print("##># ${this.body.x} + ${this.body.w} > ${info.right}");
 
             info.updateInRange(
               this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
