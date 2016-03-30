@@ -39,8 +39,14 @@ class TinyWebglStage extends Object with TinyStage {
   }
 
   bool isPaint = false;
+  int onshot = 0;
   void markPaintshot() {
     isPaint = true;
+    if(onshot<=0){
+      onshot =1;
+    } else if(onshot<3) {
+      onshot++;
+    }
     start(oneshot: true);
   }
 
@@ -111,7 +117,7 @@ class TinyWebglStage extends Object with TinyStage {
           sum = 0.0;
           count = 0;
         }
-      } while (animeIsStart);
+      } while (animeIsStart|| (--onshot>=0));
     } catch (e) {} finally {
       _animeIsOn = false;
     }
