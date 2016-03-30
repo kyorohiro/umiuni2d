@@ -96,7 +96,8 @@ class CanvasElementText {
     TextLines lines = new TextLines.fromContext2D(context, message, width, fontsize);
     //
     if (resizeHeight == true) {
-      if (lines.height > height) {
+      //if (lines.height > height)
+      {
         canvasElm.height = (lines.height * 1.0).toInt();
         resetCanvasImage(fontSize: fontsize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily, fillStyle: fillColor, textureHeight: canvasElm.height, textureWidth: width, canvasElm: canvasElm);
       }

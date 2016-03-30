@@ -17,6 +17,7 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
     await bodyText.update();
     width = bodyCanvasElm.width.toDouble();
     height = bodyCanvasElm.height.toDouble();
+    print("## ${width} ${height}");
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
