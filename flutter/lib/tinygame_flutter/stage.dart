@@ -59,6 +59,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     //    Scheduler.instance.addPersistentFrameCallback(_innerTick);
   }
 
+/*
   void markPaintshot() {
     if (animeIsStart != true) {
       this.markNeedsPaint();
@@ -69,6 +70,38 @@ class TinyFlutterStage extends RenderBox with TinyStage {
 
     }
   }
+  */
+ int onshot = 0;
+ void markPaintshot() {
+   if(animeIsStart == true ) {
+    return;
+   }
+   if (onshot == 0) {
+      ///    print("->>>>- ${onshot}");
+     onshot += 1;
+     _markPaintshot();
+   } else if (onshot < 3) {
+     //print("->>>>- ${onshot}");
+     onshot += 1;
+   }
+ }
+
+ _markPaintshot() async {
+
+   try {
+     for (;animeIsStart != true && onshot >= 0;onshot--) {
+       this.markNeedsPaint();
+       kickPaintTick();
+       int a2 = new DateTime.now().millisecondsSinceEpoch;
+            //   print("---sssssssssssasdfasdfasdfasdfasdf# ${onshot}#");
+       _innerTick(new Duration(milliseconds: new DateTime.now().millisecondsSinceEpoch));
+       await new Future.delayed(new Duration(milliseconds: 20));
+     }
+   } finally {
+     onshot = 0;
+      //  print("---ZZZZZZZZZZss\n----SSSSZZZZZZZZS");
+   }
+ }
 
   _innerTickWithOwn() async {
     int a1 = new DateTime.now().millisecondsSinceEpoch;
@@ -91,7 +124,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
   int timeCount = 0;
   int timeEpoc = 0;
   void _innerTick(Duration timeStamp) {
-  //  print("-tick----${timeStamp}");
+    //print("-tick----${timeStamp}");
     if (timeEpoc == 0) {
       timeEpoc = timeStamp.inMilliseconds;
       timeCount = 0;
@@ -112,6 +145,7 @@ class TinyFlutterStage extends RenderBox with TinyStage {
     }
     this.markNeedsPaint();
     if (animeIsStart == true && tickInPerFrame == true) {
+      //print("-------------asdfasdfasdfasdfasd");
       animeId = Scheduler.instance.addFrameCallback(_innerTick);
     } else {
 //      print("============\n adsf \n ==============");

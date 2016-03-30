@@ -164,10 +164,10 @@ class LittleUIScroller extends LittleUIObject {
       //
       info.updateInRange(this.body, this.topLayer, this.body.x, this.body.y, this.body.x + this.w, this.body.y - this.h);
 
-      new Future(() {
+      //new Future(() {
         //print("#++#${speedY} ${infos.length}");
         stage.markPaintshot();
-      });
+      //});
     }
   }
 
