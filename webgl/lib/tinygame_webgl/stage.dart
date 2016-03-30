@@ -38,25 +38,31 @@ class TinyWebglStage extends Object with TinyStage {
     root.changeStageStatus(this, null);
   }
 
-  bool isPaint = false;
   int onshot = 0;
   void markPaintshot() {
-    isPaint = true;
+    if(animeIsStart == true) {
+      return;
+    }
     if(onshot<=0){
       onshot =1;
+      start(oneshot: true);
     } else if(onshot<3) {
       onshot++;
     }
-    start(oneshot: true);
+
   }
 
   void init() {}
 
   void start({oneshot:false}) {
+    if(animeIsStart == true) {
+      return;
+    }
     if (oneshot == false && animeIsStart == false) {
       animeIsStart = true;
     }
     if(_animeIsOn == false) {
+      print("A sanimeIsStart ok");
       _anime();
     }
   }
@@ -65,6 +71,7 @@ class TinyWebglStage extends Object with TinyStage {
   bool _animeIsOn = false;
   TinyCanvas c = null;
   Future _anime() async {
+          print("--a1-");
     _animeIsOn = true;
     try {
       double sum = 0.0;
@@ -99,7 +106,7 @@ class TinyWebglStage extends Object with TinyStage {
         count++;
         prevTime = currentTime;
         markPaintshot();
-        if (isPaint && animeIsStart == false || sum_a > paintInterval) {
+        if (animeIsStart == false || sum_a > paintInterval) {
           new Future(() {
             if(c == null) {
               c = new TinyWebglCanvas(glContext);
@@ -109,17 +116,18 @@ class TinyWebglStage extends Object with TinyStage {
             c.flush();
             //(c as TinyWebglCanvasTS).flushraw();
           });
-          isPaint = false;
           sum_a = 0.0;
         }
         if (count > 60) {
-          print("###fps  ${1000~/(sum~/count)}");
+          print("###fps  ${1000~/(sum~/count)} ${onshot}");
           sum = 0.0;
           count = 0;
         }
-      } while (animeIsStart|| (--onshot>=0));
+      } while (((--onshot)>=0) || animeIsStart);
     } catch (e) {} finally {
       _animeIsOn = false;
+      print("--a-");
+
     }
   }
 
