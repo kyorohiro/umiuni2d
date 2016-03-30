@@ -125,7 +125,7 @@ class TinyWebglStage extends Object with TinyStage {
           sum = 0.0;
           count = 0;
         }
-      } while (((--onshot)>=0) || animeIsStart);
+      } while (animeIsStart ||(--onshot)>=0);
     } catch (e) {} finally {
       _animeIsOn = false;
       print("--a-");
