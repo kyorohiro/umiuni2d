@@ -15,7 +15,7 @@ class TinyFlutterTextObject extends TinyTextObjcet {
   }
 
   @override
-  Future updateText() async {
+  Future updateLayout() async {
   }
 
   @override
@@ -39,10 +39,10 @@ class TinyFlutterTextObject extends TinyTextObjcet {
     TextSpan testStyledSpan = new TextSpan(text: text, style: textStyle);
     TextPainter textPainter = new TextPainter(testStyledSpan);
 
-    textPainter.maxWidth = textureWidth; //constraints.maxWidth;
-    textPainter.minWidth = textureWidth; //constraints.minWidth;
-    textPainter.minHeight = textureHeight;
-    textPainter.maxHeight = textureHeight;
+    textPainter.maxWidth = width; //constraints.maxWidth;
+    textPainter.minWidth = width; //constraints.minWidth;
+    textPainter.minHeight = height;
+    textPainter.maxHeight = height;
 
     textPainter.layout();
     textPainter.paint(nativeCanvas, new sky.Offset(0.0, 0.0));
