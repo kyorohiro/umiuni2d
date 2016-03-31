@@ -9,23 +9,25 @@ class TinyWebglImage extends TinyImage {
   bool isUpdate = false;
 
   Texture getTex(RenderingContext GL) {
-    if (cacheGL != null && cacheGL != GL) {
+    if (cacheGL != null && cacheGL != GL)
+    {
       dispose();
     }
     if (_tex == null) {
       cacheGL = GL;
       _tex = GL.createTexture();
       GL.bindTexture(RenderingContext.TEXTURE_2D, _tex);
-      GL.texImage2D(RenderingContext.TEXTURE_2D, 0, RenderingContext.RGBA, RenderingContext.RGBA, RenderingContext.UNSIGNED_BYTE, elm);
+      GL.texImage2D(RenderingContext.TEXTURE_2D, 0,
+        RenderingContext.RGBA, RenderingContext.RGBA, RenderingContext.UNSIGNED_BYTE, elm);
       GL.bindTexture(RenderingContext.TEXTURE_2D, null);
     }
-    if(isUpdate) {
+   if(isUpdate) {
       isUpdate = false;
       GL.bindTexture(RenderingContext.TEXTURE_2D, _tex);
-      GL.pixelStorei(RenderingContext.UNPACK_FLIP_Y_WEBGL, 1);
-      GL.texImage2D(RenderingContext.TEXTURE_2D, 0, RenderingContext.RGBA,
-        RenderingContext.RGBA,
-            RenderingContext.UNSIGNED_BYTE, elm);
+      //GL.pixelStorei(RenderingContext.UNPACK_FLIP_Y_WEBGL, 1);
+      GL.texImage2D(RenderingContext.TEXTURE_2D, 0,
+         RenderingContext.RGBA, RenderingContext.RGBA, RenderingContext.UNSIGNED_BYTE, elm);
+      GL.bindTexture(RenderingContext.TEXTURE_2D, null);
     }
     return _tex;
   }

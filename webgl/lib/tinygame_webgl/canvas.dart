@@ -14,6 +14,7 @@ class TinyWebglCanvas extends TinyCanvas {
 
   RenderingContext GL;
   TinyWebglContext glContext;
+  int maxVertexTextureImageUnits = 3;
   TinyWebglCanvas(TinyWebglContext c, {int numOfCircleElm:16}) {
     GL = c.GL;
     glContext = c;
@@ -24,6 +25,7 @@ class TinyWebglCanvas extends TinyCanvas {
   Program programShape;
 
   void init() {
+    maxVertexTextureImageUnits = GL.getParameter(RenderingContext.MAX_VERTEX_TEXTURE_IMAGE_UNITS);
     print("#[A] MAX_VERTEX_TEXTURE_IMAGE_UNITS # ${GL.getParameter(RenderingContext.MAX_VERTEX_TEXTURE_IMAGE_UNITS)}");
     print("#[B] ALIASED_POINT_SIZE_RANGE       # ${GL.getParameter(RenderingContext.ALIASED_POINT_SIZE_RANGE)}");
     print("#[B] ALIASED_POINT_SIZE_RANGE       # ${GL.getParameter(RenderingContext.ALIASED_POINT_SIZE_RANGE)}");
@@ -421,7 +423,10 @@ class TinyWebglCanvas extends TinyCanvas {
     {TinyCanvasTransform transform: TinyCanvasTransform.NONE, List<Object> cache: null}) {
 
     if (flImg != null && flImg != image) {
+      //TinyImage tmp = flImg;
       flush();
+      // todo
+      //flImg.dispose();
     }
     flImg = image;
 

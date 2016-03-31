@@ -38,7 +38,7 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
     canvas.drawImageRect(stage, bodyText,
       new TinyRect(0.0, 0.0, bodyCanvasElm.width.toDouble(), bodyCanvasElm.height.toDouble()),
       new TinyRect(0.0, 0.0, bodyCanvasElm.width.toDouble(), bodyCanvasElm.height.toDouble()),
-      new TinyPaint(), transform: TinyCanvasTransform.MIRROR_ROT180);
+      new TinyPaint());//, transform: TinyCanvasTransform.MIRROR_ROT180);
     width = bodyCanvasElm.width.toDouble();
     height = bodyCanvasElm.height.toDouble();
   //  print("##>>> # ${bodyCanvasElm.height.toDouble()} ${textureHeight}");
