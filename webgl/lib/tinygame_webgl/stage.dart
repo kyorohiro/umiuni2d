@@ -41,6 +41,7 @@ class TinyWebglStage extends Object with TinyStage {
   }
 
   int onshot = 0;
+  int aac = 0;
   void markPaintshot() {
     if(animeIsStart == true) {
       return;
@@ -50,6 +51,7 @@ class TinyWebglStage extends Object with TinyStage {
       start(oneshot: true);
     } else if(onshot<3) {
       onshot++;
+
     }
 
   }
@@ -107,7 +109,8 @@ class TinyWebglStage extends Object with TinyStage {
         sum_a += interval;
         count++;
         prevTime = currentTime;
-        markPaintshot();
+        // TODO
+        //markPaintshot();
         if (animeIsStart == false || sum_a > paintInterval) {
           new Future(() {
             if(c == null) {
@@ -121,11 +124,14 @@ class TinyWebglStage extends Object with TinyStage {
           sum_a = 0.0;
         }
         if (count > 60) {
-          print("###fps  ${1000~/(sum~/count)} ${onshot}");
+          print("###fps  ${1000~/(sum~/count)} ${onshot} ${animeIsStart}");
           sum = 0.0;
           count = 0;
         }
-      } while (animeIsStart ||(--onshot)>=0);
+        if(onshot >=0) {
+          --onshot;
+        }
+      } while (animeIsStart ||onshot>=0);
     } catch (e) {} finally {
       _animeIsOn = false;
       print("--a-");
