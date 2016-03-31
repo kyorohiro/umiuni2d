@@ -8,6 +8,7 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
   int paintInterval = 40;
   int tickInterval = 15;
   String selectors = null;
+  double fontPower = 2.0;
   TinyGameBuilderForWebgl({this.assetsRoot:""}) {}
 
   TinyStage createStage(TinyDisplayObject root) {
@@ -109,7 +110,8 @@ class TinyGameBuilderForWebgl extends TinyGameBuilder {
             fontFamily: fontFamily,
             fillColor : fillColor,
             strokeColor: strokeColor,
-            backgroundColor: backgroundColor
+            backgroundColor: backgroundColor,
+            power: fontPower
           );
       }
 }

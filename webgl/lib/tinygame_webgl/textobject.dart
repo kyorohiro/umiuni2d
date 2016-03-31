@@ -6,17 +6,30 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
   int index = 0;
   TExpansionTapCallback callback;
   double magnufication = 1.50;
+  double power = 2.0;
 
-  TinyWebglTextObjcet(text, textureWidth, textureHeight, {fontSize: 25, isBold: false, isItalic: false, fontFamily: "Century Gothic", fillColor: null, strokeColor: null, backgroundColor: null}) : super(text, textureWidth, textureHeight, fontSize: fontSize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily, fillStyle: fillColor, strokeStyle: strokeColor, backgroundColor: backgroundColor) {
+  TinyWebglTextObjcet(
+    text, textureWidth, textureHeight,
+    {
+      fontSize: 25, isBold: false, isItalic: false,
+      fontFamily: "Century Gothic", fillColor: null, strokeColor: null,
+      backgroundColor: null,
+      this.power: 2.0
+    }) : super(text, textureWidth, textureHeight, fontSize: fontSize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily, fillStyle: fillColor, strokeStyle: strokeColor, backgroundColor: backgroundColor) {
     bodyCanvasElm = new CanvasElement(width: textureWidth.toInt(), height: textureHeight.toInt());
     bodyText = new TinyWebglImage(bodyCanvasElm);
   }
 
   Future updateLayout() async {
-    CanvasElementText.makeImage(text, canvasElm: bodyCanvasElm, width: (width * magnufication).toInt(), height: (height * magnufication).toInt(), fontFamily: fontFamily, fontsize: (fontSize * magnufication), isBold: isBold, isItalic: isItalic, fillColor: fillStyle, strokeColor: strokeStyle, align: CanvasElementTextAlign.left_top);
+    CanvasElementText.makeImage(text, canvasElm: bodyCanvasElm,
+       width: (width * magnufication *power).toInt(),
+       height: (height * magnufication *power).toInt(),
+       fontFamily: fontFamily,
+       fontsize: (fontSize * magnufication*power),
+       isBold: isBold, isItalic: isItalic, fillColor: fillStyle, strokeColor: strokeStyle, align: CanvasElementTextAlign.left_top);
     await bodyText.update();
-    width = bodyCanvasElm.width.toDouble();
-    height = bodyCanvasElm.height.toDouble();
+    width = bodyCanvasElm.width.toDouble()/power;
+    height = bodyCanvasElm.height.toDouble()/power;
     print("## ${width} ${height}");
   }
 
@@ -36,11 +49,11 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
     }
 
     canvas.drawImageRect(stage, bodyText,
-      new TinyRect(0.0, 0.0, bodyCanvasElm.width.toDouble(), bodyCanvasElm.height.toDouble()),
+      new TinyRect(0.0, 0.0, bodyCanvasElm.width.toDouble()*power, bodyCanvasElm.height.toDouble()*power),
       new TinyRect(0.0, 0.0, bodyCanvasElm.width.toDouble(), bodyCanvasElm.height.toDouble()),
       new TinyPaint());//, transform: TinyCanvasTransform.MIRROR_ROT180);
-    width = bodyCanvasElm.width.toDouble();
-    height = bodyCanvasElm.height.toDouble();
+  //  width = bodyCanvasElm.width.toDouble()/power;
+  //  height = bodyCanvasElm.height.toDouble()/power;
   //  print("##>>> # ${bodyCanvasElm.height.toDouble()} ${textureHeight}");
 
   }
