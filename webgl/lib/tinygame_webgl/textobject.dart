@@ -30,7 +30,7 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
     await bodyText.update();
     width = bodyCanvasElm.width.toDouble()/power;
     height = bodyCanvasElm.height.toDouble()/power;
-    print("## ${width} ${height}");
+  //  print("## ${width} ${height}");
   }
 
   void onPaint(TinyStage stage, TinyCanvas canvas) {
@@ -38,7 +38,7 @@ class TinyWebglTextObjcet extends TinyTextObjcet {
     if (stage is TinyWebglStage) {
       double sx = stage.sxFromMat;
       if (magnufication != sx) {
-        print(":: ${magnufication} = ${sx}");
+        //print(":: ${magnufication} = ${sx}");
         magnufication = sx;
         updateLayout().then((_) {
           stage.markPaintshot();
