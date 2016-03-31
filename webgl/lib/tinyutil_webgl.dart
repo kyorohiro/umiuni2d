@@ -165,7 +165,7 @@ class TextLines {
       texts.add(message);
       size.add(m.width);
       fontHeights.add(fontHeight * 1.2);
-      _height += fontHeight * 1.2;
+      _height += fontHeight * 1.4;
       if (_width < m.width) {
         _width = m.width;
       }
