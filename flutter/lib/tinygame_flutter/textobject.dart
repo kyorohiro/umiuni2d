@@ -15,11 +15,12 @@ class TinyFlutterTextObject extends TinyTextObjcet {
     TextSpan testStyledSpan = new TextSpan(text: text, style: textStyle);
     textPainter = new TextPainter(testStyledSpan);
 
+/*
     textPainter.maxWidth = width; //constraints.maxWidth;
     textPainter.minWidth = width; //constraints.minWidth;
     textPainter.minHeight = height;
-    textPainter.maxHeight = height;
-    textPainter.layout();
+    textPainter.maxHeight = height;*/
+    textPainter.layout(minWidth: width, maxWidth: width);
 
     this.width = textPainter.width;
     this.height = textPainter.height;

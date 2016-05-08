@@ -84,7 +84,7 @@ class TinyFlutterStage extends RenderConstrainedBox implements TinyStage {
   void kickPaintTick() {
     if (tickInPerFrame == true) {
     //  print("-tickPaint--${tickInPerFrame}");
-      animeId = Scheduler.instance.addFrameCallback(_innerTick);
+      animeId = SchedulerBinding.instance.scheduleFrameCallback(_innerTick);
     } else {
       _innerTickWithOwn();
     }
@@ -180,7 +180,7 @@ class TinyFlutterStage extends RenderConstrainedBox implements TinyStage {
     this.markNeedsPaint();
     if (animeIsStart == true && tickInPerFrame == true) {
       //print("-------------asdfasdfasdfasdfasd");
-      animeId = Scheduler.instance.addFrameCallback(_innerTick);
+      animeId = SchedulerBinding.instance.scheduleFrameCallback(_innerTick);
     } else {
 //      print("============\n adsf \n ==============");
     }
@@ -189,7 +189,7 @@ class TinyFlutterStage extends RenderConstrainedBox implements TinyStage {
   @override
   void stop() {
     if (animeIsStart == true) {
-      Scheduler.instance.cancelFrameCallbackWithId(animeId);
+      SchedulerBinding.instance.cancelFrameCallbackWithId(animeId);
     }
     animeIsStart = false;
   }

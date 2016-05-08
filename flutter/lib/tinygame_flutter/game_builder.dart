@@ -3,26 +3,25 @@ part of tinygame_flutter;
 class TinyGameBuilderForFlutter extends TinyGameBuilder {
   String assetsRoot;
 
-  TinyGameBuilderForFlutter({this.assetsRoot:"web/"}) {
+  TinyGameBuilderForFlutter({this.assetsRoot: "web/"}) {
     ;
   }
 
-  String get assetsPath => (assetsRoot.endsWith("/")?assetsRoot:"${assetsRoot}/");
+  String get assetsPath => (assetsRoot.endsWith("/") ? assetsRoot : "${assetsRoot}/");
 
   bool tickInPerFrame = true;
-  bool useTestCanvas = true;//false;
+  bool useTestCanvas = true; //false;
   bool useDrawVertexForPrimtive = false;
   TinyFlutterAudioManager audioManager = new TinyFlutterAudioManager();
 
   @override
   TinyStage createStage(TinyDisplayObject root) {
-    return new TinyFlutterStage(this, root,tickInPerFrame:tickInPerFrame, useTestCanvas:useTestCanvas, useDrawVertexForPrimtive:useDrawVertexForPrimtive);
+    return new TinyFlutterStage(this, root, tickInPerFrame: tickInPerFrame, useTestCanvas: useTestCanvas, useDrawVertexForPrimtive: useDrawVertexForPrimtive);
   }
 
   @override
   Future<TinyImage> loadImageBase(String path) async {
-    return new TinyFlutterImage(
-        await ResourceLoader.loadImage("${assetsPath}${path}"));
+    return new TinyFlutterImage(await ResourceLoader.loadImage("${assetsPath}${path}"));
   }
 
   @override
@@ -32,7 +31,7 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
 
   @override
   Future<data.Uint8List> loadBytesBase(String path) async {
-    return  await ResourceLoader.loadBytes("${assetsRoot}${path}");
+    return await ResourceLoader.loadBytes("${assetsRoot}${path}");
   }
 
   @override
@@ -48,15 +47,16 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
     return new TinyFlutterFile(f);
   }
 
-  PathServiceProxy pathServiceProxy;
+  //PathServiceProxy pathServiceProxy;
   Directory rootPath;
   Future initFile() async {
     if (rootPath == null) {
-      PathServiceProxy pathServiceProxy = new PathServiceProxy.unbound();
-      shell.connectToService("dummy", pathServiceProxy);
-      PathServiceGetFilesDirResponseParams dirResponse =
-          await pathServiceProxy.ptr.getFilesDir();
-      rootPath = new Directory(dirResponse.path);
+      //PathServiceProxy pathServiceProxy = new PathServiceProxy.unbound();
+      //  shell.connectToService("dummy", pathServiceProxy);
+      //  PathServiceGetFilesDirResponseParams dirResponse =
+      //      await pathServiceProxy.ptr.getFilesDir();
+      //  rootPath = new Directory(dirResponse.path);
+      rootPath = await PathProvider.getApplicationDocumentsDirectory();
     }
   }
 
@@ -81,24 +81,7 @@ class TinyGameBuilderForFlutter extends TinyGameBuilder {
   }
 
   @override
-  TinyTextObjcet createTextObject(
-    String text, double textureWidth, double textureHeight,{
-      double fontSize: 25.0,
-      bool isBold: false,
-      bool isItalic: false,
-      String fontFamily: "Century Gothic",
-      var fillColor: null,
-      var strokeColor: null,
-      var backgroundColor: null}) {
-          return new TinyFlutterTextObject(text, textureWidth, textureHeight,
-            fontSize: fontSize,
-            isBold: isBold,
-            isItalic: isItalic,
-            fontFamily: fontFamily,
-            fillColor : fillColor,
-            strokeColor: strokeColor,
-            backgroundColor: backgroundColor
-          );
-      }
-
+  TinyTextObjcet createTextObject(String text, double textureWidth, double textureHeight, {double fontSize: 25.0, bool isBold: false, bool isItalic: false, String fontFamily: "Century Gothic", var fillColor: null, var strokeColor: null, var backgroundColor: null}) {
+    return new TinyFlutterTextObject(text, textureWidth, textureHeight, fontSize: fontSize, isBold: isBold, isItalic: isItalic, fontFamily: fontFamily, fillColor: fillColor, strokeColor: strokeColor, backgroundColor: backgroundColor);
+  }
 }
