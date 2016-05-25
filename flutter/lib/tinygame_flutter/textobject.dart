@@ -13,7 +13,7 @@ class TinyFlutterTextObject extends TinyTextObjcet {
     //TextStyle textStyle = new TextStyle(fontSize: 50.0, color: textColor);
     TextStyle textStyle = new TextStyle(fontFamily: fontFamily, fontSize: fontSize.toDouble(), fontStyle: (isItalic ? FontStyle.italic : FontStyle.normal), fontWeight: (isBold ? FontWeight.w500 : FontWeight.w300), color: textColor);
     TextSpan testStyledSpan = new TextSpan(text: text, style: textStyle);
-    textPainter = new TextPainter(testStyledSpan);
+    textPainter = new TextPainter(text:testStyledSpan);
 
 /*
     textPainter.maxWidth = width; //constraints.maxWidth;
