@@ -7,9 +7,12 @@ Umiuni2D is 2d game library executable on flutter and webgl.
 
 http://kyorohiro.github.io/umiuni2d/web/index.html
 
-# This Infomation is OLD
+# Restriction..
+
 Using Flutter API is old in umiuni2d now.
+
 maybe, not working...
+
 
 
 ## Example & Demo
