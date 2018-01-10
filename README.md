@@ -1,3 +1,21 @@
+
+Using Flutter API is old in umiuni2d now in master branch.
+
+re-creating now!!
+https://github.com/kyorohiro/umiuni2d/tree/work
+
+
+2015-2106y's branch is here
+https://github.com/kyorohiro/umiuni2d/tree/2015y
+
+
+
+
+
+
+
+
+
 # Umiuni2D
 
 
@@ -6,12 +24,6 @@
 Umiuni2D is 2d game library executable on flutter and webgl.
 
 http://kyorohiro.github.io/umiuni2d/web/index.html
-
-# Restriction..
-
-Using Flutter API is old in umiuni2d now.
-
-maybe, not working...
 
 
 
