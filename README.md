@@ -2,7 +2,7 @@
 Using Flutter API is old in umiuni2d now in master branch.
 
 re-creating now!!
-https://github.com/kyorohiro/umiuni2d/tree/work
+https://github.com/kyorohiro/umiuni2d_mini
 
 
 2015-2106y's branch is here
