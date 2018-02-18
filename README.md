@@ -47,8 +47,10 @@ https://play.google.com/store/apps/details?id=info.kyorohiro.umiuni2d.demo.mino
 * example branch is "v0.0.1" too.
 https://github.com/kyorohiro/umiuni2d_example/tree/v0.0.1
 
+### 2015y
+Old VERSION
 
-### 0.0.2 now creating
-* animation plus
-* scroll view plus
-* mod interface
+### 0.0.2
+Corresponding to the latest API (2018/2/1)
+
+### 0.0.3 now creating
