@@ -8,9 +8,6 @@ Mini Game Pacakge For Flutter and Html5 with Dart.
 http://kyorohiro.github.io/umiuni2d/web/index.html
 
 
-# Umiuni2D
-Umiuni2D is 2d game package for flutter and html5/webgl with Dart.
-
 ## Package
 
 ##### [P] https://github.com/kyorohiro/umiuni2d_sprite
