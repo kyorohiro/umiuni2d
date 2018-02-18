@@ -39,6 +39,9 @@ test code for Flutter nad Html5
 
 
 ## VERSION
+### 0.0.0
+https://github.com/kyorohiro/doc_2dgame
+
 ### 0.0.1
 Trial for making mini games.
 https://play.google.com/store/apps/details?id=info.kyorohiro.umiuni2d.demo.mino
