@@ -19,6 +19,9 @@ Audio Library For Flutter and Html5
 ##### [P] https://github.com/kyorohiro/umiuni2d_io
 File Library For Flutter and Html5
 
+##### [P] https://github.com/kyorohiro/umiuni2d_httprequest
+HttpRequest Library For Flutter and Html5
+
 ##### [C] https://github.com/kyorohiro/umiuni2d_check
 test code for Flutter nad Html5
 
